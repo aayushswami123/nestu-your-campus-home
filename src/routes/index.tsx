@@ -793,10 +793,10 @@ function SuccessState() {
     <div className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-8 text-center shadow-soft animate-fade-up">
       <div className="mx-auto mb-3 text-4xl">🎉</div>
       <h3 className="font-serif text-3xl text-[var(--ink)]">
-        You're #2,401 on the list!
+        You're on the list!
       </h3>
       <p className="mt-2 text-sm text-muted-foreground">
-        Share your link to move up faster.
+        Share your link to move up the list when we launch.
       </p>
       <div className="mt-6 flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background)] p-1.5 pl-4">
         <span className="flex-1 truncate text-left font-mono text-sm text-[var(--ink)]">
