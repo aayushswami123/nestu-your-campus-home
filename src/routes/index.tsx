@@ -22,13 +22,13 @@ export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "NestU — Find your place near campus, before everyone else does" },
+      { title: "NestU, find your place near campus before everyone else does" },
       {
         name: "description",
         content:
           "Verified subleases, AI roommate matching, and neighborhood insights, built for students, interns, international students, and young professionals. Join the NestU waitlist.",
       },
-      { property: "og:title", content: "NestU — Student housing, without the hassle" },
+      { property: "og:title", content: "NestU, student housing without the hassle" },
       {
         property: "og:description",
         content:
@@ -374,7 +374,7 @@ function HowItWorks() {
     {
       n: "03",
       t: "Match and move in",
-      d: "AI matches you with compatible roommates. Chat, connect, and sign — all in one place.",
+      d: "AI matches you with compatible roommates. Chat, connect, and sign, all in one place.",
     },
   ];
   return (
@@ -785,7 +785,7 @@ function SuccessState() {
   };
 
   const shareText = encodeURIComponent(
-    "I just joined the NestU waitlist — student housing without the hassle. Join me:",
+    "I just joined the NestU waitlist for student housing without the hassle. Join me:",
   );
   const waUrl = `https://wa.me/?text=${shareText}%20https://${referralLink}`;
 
@@ -885,7 +885,7 @@ function Faq() {
   const items = [
     {
       q: "Is NestU free to use?",
-      a: "Yes — NestU is free for students, interns, and young professionals. There are no broker fees and no charges to browse, match, or message.",
+      a: "Yes. NestU is free for students, interns, international students, and young professionals. There are no broker fees and no charges to browse, match, or message.",
     },
     {
       q: "How does landlord verification work?",
@@ -897,10 +897,10 @@ function Faq() {
     },
     {
       q: "When does NestU launch at my university?",
-      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next — adding your university when you join helps move it up.",
+      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next, so adding your university when you join helps move it up.",
     },
     {
-      q: "I'm a landlord — how do I list my property?",
+      q: "I'm a landlord. How do I list my property?",
       a: "Join the waitlist and select 'Landlord'. You'll get early access to list units to thousands of verified students with no middleman and no broker fees.",
     },
   ];
