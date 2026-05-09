@@ -297,16 +297,19 @@ function Hero({ onJoin }: { onJoin: () => void }) {
             </Chip>
 
             <h1 className="mt-6 font-serif text-[44px] leading-[1.02] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
-              Find your place near campus.
+              Housing shouldn't be a
+              <span className="italic text-[var(--orange-accent)]"> fairy tale</span>.
               <br />
               <span className="italic text-[var(--ink)]/70">
-                Before everyone else does.
+                Get verified listings instead.
               </span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              Verified subleases, AI roommate matching, and neighborhood insights.
-              Built for students, interns, international students, and young professionals.
+              Stop playing roommate roulette. Stop sending deposits to strangers.
+              Verified subleases, AI roommate matching by lifestyle, and real
+              neighborhood data, built for students, interns, international students,
+              and young professionals.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
