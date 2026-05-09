@@ -10,19 +10,25 @@ import {
   MapPin,
   Sparkles,
   ChevronDown,
+  ShieldCheck,
+  Sparkle,
+  Building2,
+  Plane,
+  GraduationCap,
+  Briefcase,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "NestU — Find your place near campus, before everyone else does" },
+      { title: "NestU, find your place near campus before everyone else does" },
       {
         name: "description",
         content:
-          "Verified subleases, AI roommate matching, and neighborhood insights — built for students. Join the NestU waitlist for early access.",
+          "Verified subleases, AI roommate matching, and neighborhood insights, built for students, interns, international students, and young professionals. Join the NestU waitlist.",
       },
-      { property: "og:title", content: "NestU — Student housing, without the hassle" },
+      { property: "og:title", content: "NestU, student housing without the hassle" },
       {
         property: "og:description",
         content:
@@ -126,8 +132,8 @@ function Nav({ onJoin }: { onJoin: () => void }) {
 /* ---------------- Hero ---------------- */
 function ListingMock() {
   return (
-    <div className="relative w-full max-w-sm">
-      <div className="rounded-2xl border border-[var(--border)] bg-card p-3 shadow-soft">
+    <div className="relative w-full max-w-sm pb-10 sm:pb-16 sm:pl-6">
+      <div className="rounded-2xl border border-[var(--border)] bg-card p-3 shadow-soft lift">
         <div className="relative h-48 overflow-hidden rounded-xl bg-gradient-to-br from-[oklch(0.85_0.04_60)] to-[oklch(0.72_0.06_45)]">
           <div className="absolute inset-0 grain opacity-40" />
           <div className="absolute left-3 top-3">
@@ -170,7 +176,7 @@ function ListingMock() {
         </div>
       </div>
       {/* floating roommate match card */}
-      <div className="absolute -bottom-6 -left-6 hidden w-48 rotate-[-3deg] rounded-xl border border-[var(--border)] bg-card p-3 shadow-soft sm:block">
+      <div className="absolute bottom-0 left-0 hidden w-48 rotate-[-3deg] rounded-xl border border-[var(--border)] bg-card p-3 shadow-soft sm:block">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--sage)] text-xs font-medium text-white">
             PM
@@ -209,8 +215,8 @@ function Hero({ onJoin }: { onJoin: () => void }) {
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              Verified subleases, AI roommate matching, and neighborhood insights —
-              all built for students.
+              Verified subleases, AI roommate matching, and neighborhood insights.
+              Built for students, interns, international students, and young professionals.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
@@ -244,13 +250,15 @@ function Hero({ onJoin }: { onJoin: () => void }) {
               </span>
             </div>
 
-            <div className="mt-8 flex justify-center lg:justify-start">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--sage)] pulse-dot" />
-                </span>
-                <span className="font-medium">2,400+ students</span> already on the
-                waitlist
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <GraduationCap className="h-3.5 w-3.5" /> Students
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <Plane className="h-3.5 w-3.5" /> International students
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <Briefcase className="h-3.5 w-3.5" /> Interns &amp; young professionals
               </span>
             </div>
           </div>
@@ -265,6 +273,69 @@ function Hero({ onJoin }: { onJoin: () => void }) {
 }
 
 /* ---------------- Problem Bar ---------------- */
+function Marquee({
+  items,
+  variant = "light",
+  fast = false,
+}: {
+  items: { icon?: React.ReactNode; text: string }[];
+  variant?: "light" | "dark" | "accent";
+  fast?: boolean;
+}) {
+  const styles =
+    variant === "dark"
+      ? "bg-[var(--ink)] text-[var(--background)] border-y border-white/10"
+      : variant === "accent"
+      ? "bg-[var(--orange-accent)] text-white"
+      : "bg-tint text-[var(--ink)] border-y border-[var(--border)]";
+  const doubled = [...items, ...items];
+  return (
+    <div className={`marquee py-4 ${styles}`}>
+      <div className={`marquee-track ${fast ? "marquee-track-fast" : ""}`}>
+        {doubled.map((it, i) => (
+          <div
+            key={i}
+            className="flex shrink-0 items-center gap-2.5 text-sm font-medium tracking-tight"
+          >
+            {it.icon}
+            <span>{it.text}</span>
+            <span
+              aria-hidden
+              className={`ml-2.5 h-1.5 w-1.5 rounded-full ${
+                variant === "accent" ? "bg-white/70" : "bg-[var(--orange-accent)]"
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TopMarquee() {
+  const items = [
+    { icon: <ShieldCheck className="h-4 w-4" />, text: "Verified students & young professionals" },
+    { icon: <Sparkle className="h-4 w-4" />, text: "AI roommate matching" },
+    { icon: <Key className="h-4 w-4" />, text: "Real subleases, zero scams" },
+    { icon: <MapPin className="h-4 w-4" />, text: "Know the neighborhood before you sign" },
+    { icon: <Building2 className="h-4 w-4" />, text: "No broker fees, ever" },
+    { icon: <GraduationCap className="h-4 w-4" />, text: "Built for campuses everywhere" },
+  ];
+  return <Marquee items={items} variant="light" />;
+}
+
+function CtaMarquee() {
+  const items = [
+    { text: "Join the NestU waitlist" },
+    { text: "Free forever" },
+    { text: "Verified listings only" },
+    { text: "AI roommate matching" },
+    { text: "No broker fees" },
+    { text: "Coming to your campus" },
+  ];
+  return <Marquee items={items} variant="accent" fast />;
+}
+
 function ProblemBar() {
   const stats = [
     { num: "72%", caption: "of students say finding housing near campus is stressful" },
@@ -303,7 +374,7 @@ function HowItWorks() {
     {
       n: "03",
       t: "Match and move in",
-      d: "AI matches you with compatible roommates. Chat, connect, and sign — all in one place.",
+      d: "AI matches you with compatible roommates. Chat, connect, and sign, all in one place.",
     },
   ];
   return (
@@ -356,7 +427,7 @@ function FeatureCard({
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-8 shadow-soft sm:p-10 ${
+      className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-8 shadow-soft sm:p-10 lift ${
         span ? "md:col-span-2" : ""
       }`}
     >
@@ -404,7 +475,7 @@ function Features() {
             icon={Key}
             eyebrow="Verified marketplace"
             title="Real listings. Zero scams."
-            body="Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk. No fake posts."
+            body="Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk, no fake posts."
             tags={["Short-term available", "Furnished options", "Semester leases"]}
             span
           />
@@ -426,7 +497,7 @@ function Features() {
             icon={Users}
             eyebrow="Community"
             title="Move in with people you actually click with."
-            body="Group chat with roommate matches, share listings, and coordinate move-in dates — all in one place, before lease day."
+            body="Group chat with roommate matches, share listings, and coordinate move-in dates, all in one place before lease day."
             tags={["Group chats", "Saved listings", "Move-in planning"]}
             span
           />
@@ -447,7 +518,7 @@ function AudienceCard({
   body: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft">
+    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
       <div className="mb-3 text-3xl">{emoji}</div>
       <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{body}</p>
@@ -466,7 +537,7 @@ function WhoItsFor() {
           Built for everyone near campus.
         </h2>
       </div>
-      <div className="mt-14 grid gap-5 sm:grid-cols-2">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <AudienceCard
           emoji="🎓"
           title="Students"
@@ -479,13 +550,13 @@ function WhoItsFor() {
         />
         <AudienceCard
           emoji="💼"
-          title="Interns"
-          body="Short-term furnished subleases near your office. Month-to-month options, no 12-month commitment."
+          title="Interns & young professionals"
+          body="Short-term furnished subleases near your office or campus. Month-to-month options, no 12-month commitment."
         />
         <AudienceCard
           emoji="🏠"
           title="Landlords & property owners"
-          body="List your unit to thousands of verified students. Free to list. No middleman, no broker fees."
+          body="List your unit to verified students and young professionals. Free to list. No middleman, no broker fees."
         />
       </div>
     </section>
@@ -529,7 +600,7 @@ function Universities() {
           ))}
         </div>
         <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-foreground">
-          Request NestU at your university — the most requested schools launch next.
+          Request NestU at your university. The most requested schools launch next.
         </p>
       </div>
     </section>
@@ -573,7 +644,7 @@ function Testimonials() {
         {quotes.map((t) => (
           <figure
             key={t.n}
-            className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft"
+            className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift"
           >
             <blockquote className="font-serif text-xl leading-snug text-[var(--ink)]">
               "{t.q}"
@@ -615,6 +686,22 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
       className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft sm:p-8"
     >
       <div className="space-y-4">
+        <button
+          type="button"
+          onClick={() => onSubmit()}
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
+        >
+          <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden>
+            <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.2s2.69-6.2 6-6.2c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 3.13 14.7 2.2 12 2.2 6.93 2.2 2.8 6.33 2.8 11.4S6.93 20.6 12 20.6c6.92 0 9.2-4.86 9.2-7.4 0-.5-.05-.88-.13-1.26L12 10.2z" />
+            <path fill="#34A853" d="M3.88 7.36l3.2 2.35C8 8.05 9.86 6.8 12 6.8c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 4.13 14.7 3.2 12 3.2 8.24 3.2 5.02 5.36 3.88 7.36z" opacity="0"/>
+          </svg>
+          Continue with Google
+        </button>
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="h-px flex-1 bg-[var(--border)]" />
+          or
+          <span className="h-px flex-1 bg-[var(--border)]" />
+        </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
             Email address
@@ -624,9 +711,12 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@university.edu"
+            placeholder="you@email.com"
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-base text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            Any email works. School email not required.
+          </p>
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
@@ -654,7 +744,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             type="text"
             value={university}
             onChange={(e) => setUniversity(e.target.value)}
-            placeholder="e.g. UC Berkeley · UT Austin · NYU"
+            placeholder="e.g. UC Berkeley, UT Austin, NYU"
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
         </div>
@@ -677,7 +767,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
         </PrimaryButton>
 
         <p className="text-center text-xs text-muted-foreground">
-          2,400+ already joined · No spam · Unsubscribe anytime
+          No spam. Unsubscribe anytime.
         </p>
       </div>
     </form>
@@ -695,7 +785,7 @@ function SuccessState() {
   };
 
   const shareText = encodeURIComponent(
-    "I just joined the NestU waitlist — student housing without the hassle. Join me:",
+    "I just joined the NestU waitlist for student housing without the hassle. Join me:",
   );
   const waUrl = `https://wa.me/?text=${shareText}%20https://${referralLink}`;
 
@@ -703,10 +793,10 @@ function SuccessState() {
     <div className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-8 text-center shadow-soft animate-fade-up">
       <div className="mx-auto mb-3 text-4xl">🎉</div>
       <h3 className="font-serif text-3xl text-[var(--ink)]">
-        You're #2,401 on the list!
+        You're on the list!
       </h3>
       <p className="mt-2 text-sm text-muted-foreground">
-        Share your link to move up faster.
+        Share your link to move up the list when we launch.
       </p>
       <div className="mt-6 flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background)] p-1.5 pl-4">
         <span className="flex-1 truncate text-left font-mono text-sm text-[var(--ink)]">
@@ -795,7 +885,7 @@ function Faq() {
   const items = [
     {
       q: "Is NestU free to use?",
-      a: "Yes — NestU is free for students, interns, and young professionals. There are no broker fees and no charges to browse, match, or message.",
+      a: "Yes. NestU is free for students, interns, international students, and young professionals. There are no broker fees and no charges to browse, match, or message.",
     },
     {
       q: "How does landlord verification work?",
@@ -807,10 +897,10 @@ function Faq() {
     },
     {
       q: "When does NestU launch at my university?",
-      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next — adding your university when you join helps move it up.",
+      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next, so adding your university when you join helps move it up.",
     },
     {
-      q: "I'm a landlord — how do I list my property?",
+      q: "I'm a landlord. How do I list my property?",
       a: "Join the waitlist and select 'Landlord'. You'll get early access to list units to thousands of verified students with no middleman and no broker fees.",
     },
   ];
@@ -849,7 +939,7 @@ function Footer({ onJoin }: { onJoin: () => void }) {
           </button>
         </div>
         <div className="mt-10 border-t border-white/10 pt-6 text-sm text-[var(--background)]/60">
-          <p>Coming to every university · © {new Date().getFullYear()} NestU</p>
+          <p>Coming to every university. © {new Date().getFullYear()} NestU.</p>
           <p className="mt-2 text-xs leading-relaxed text-[var(--background)]/45">
             NestU is a housing search platform. We are not a licensed real estate
             broker. Joining the waitlist does not constitute a lease, reservation, or
@@ -873,10 +963,12 @@ function Index() {
     <div className="min-h-screen">
       <Nav onJoin={scrollToWaitlist} />
       <Hero onJoin={scrollToWaitlist} />
+      <TopMarquee />
       <ProblemBar />
       <HowItWorks />
       <Features />
       <WhoItsFor />
+      <CtaMarquee />
       <Universities />
       <Testimonials />
       <Waitlist submitted={submitted} setSubmitted={setSubmitted} />
