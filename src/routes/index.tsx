@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import {
   Home,
   Check,
@@ -16,23 +18,111 @@ import {
   Plane,
   GraduationCap,
   Briefcase,
+  Ghost,
+  Flame,
+  DollarSign,
+  Globe2,
+  AlertTriangle,
+  Lock,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "NestU, find your place near campus before everyone else does" },
+      {
+        title:
+          "NestU — Verified student housing, scam-free roommate matching, no broker fees",
+      },
       {
         name: "description",
         content:
-          "Verified subleases, AI roommate matching, and neighborhood insights, built for students, interns, international students, and young professionals. Join the NestU waitlist.",
+          "Stop playing roommate roulette and get burned by Craigslist scams. Verified subleases, AI roommate matching by lifestyle, and neighborhood insights for students, interns, international students, and young professionals. Free to join.",
       },
-      { property: "og:title", content: "NestU, student housing without the hassle" },
+      {
+        name: "keywords",
+        content:
+          "student housing, verified sublease, college apartments, roommate matching, international student housing, intern housing, no broker fees, off campus housing, scam free rentals, ASU housing, university housing waitlist",
+      },
+      { name: "robots", content: "index, follow" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "NestU" },
+      {
+        property: "og:title",
+        content: "NestU — Stop the housing fairy tale. Get verified listings instead.",
+      },
       {
         property: "og:description",
         content:
-          "Verified listings, AI roommate matching, and neighborhood intelligence. Free to join.",
+          "Verified landlords. AI roommate matching. Real neighborhood data. Built for students, interns, and young professionals near campus.",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "NestU — Verified student housing, no scams, no broker fees",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Stop Craigslist roulette. Verified subleases, lifestyle-based roommate matching, and real neighborhood insights.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "https://nestu.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "NestU",
+              url: "https://nestu.app/",
+              description:
+                "Verified student housing, AI roommate matching, and neighborhood insights for students, interns, international students, and young professionals.",
+              sameAs: [],
+            },
+            {
+              "@type": "WebSite",
+              name: "NestU",
+              url: "https://nestu.app/",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://nestu.app/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Is NestU free to use?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. NestU is free for students, interns, international students, and young professionals. No broker fees, no charges to browse, match, or message.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How does NestU prevent rental scams?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Every landlord submits ID and proof of ownership or management rights for the unit. Listings are reviewed before going live. Suspicious posts are removed.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "Can international students sign up before arriving in the US?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. NestU is built so you can browse verified listings and match with roommates from abroad, before you board the plane.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
       },
     ],
   }),
@@ -207,16 +297,19 @@ function Hero({ onJoin }: { onJoin: () => void }) {
             </Chip>
 
             <h1 className="mt-6 font-serif text-[44px] leading-[1.02] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
-              Find your place near campus.
+              Housing shouldn't be a
+              <span className="italic text-[var(--orange-accent)]"> fairy tale</span>.
               <br />
               <span className="italic text-[var(--ink)]/70">
-                Before everyone else does.
+                Get verified listings instead.
               </span>
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              Verified subleases, AI roommate matching, and neighborhood insights.
-              Built for students, interns, international students, and young professionals.
+              Stop playing roommate roulette. Stop sending deposits to strangers.
+              Verified subleases, AI roommate matching by lifestyle, and real
+              neighborhood data, built for students, interns, international students,
+              and young professionals.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
@@ -353,6 +446,116 @@ function ProblemBar() {
             </p>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Real Stories (Reddit-inspired pain points) ---------------- */
+function StoryCard({
+  icon: Icon,
+  tag,
+  quote,
+  fix,
+}: {
+  icon: typeof Ghost;
+  tag: string;
+  quote: string;
+  fix: string;
+}) {
+  return (
+    <div className="group relative flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[var(--orange-accent)]">
+        <Icon className="h-4 w-4" strokeWidth={2} />
+        {tag}
+      </div>
+      <blockquote className="mt-5 font-serif text-xl leading-snug text-[var(--ink)]">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
+      <div className="mt-5 flex items-center gap-2 border-t border-[var(--border)] pt-4 text-[13px] text-[var(--ink)]/80">
+        <Check className="h-4 w-4 shrink-0 text-[var(--sage)]" strokeWidth={2.5} />
+        <span>
+          <span className="font-medium text-[var(--ink)]">NestU fixes this:</span>{" "}
+          {fix}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function RealStories() {
+  const stories = [
+    {
+      icon: Ghost,
+      tag: "The phantom landlord",
+      quote:
+        "They wanted a $50 deposit just to get the code to the lockbox. I paid, and the code didn't work. Then they stopped responding.",
+      fix: "Every landlord is identity-verified. Every listing is reviewed before going live. No ghost owners, no lockbox tricks.",
+    },
+    {
+      icon: DollarSign,
+      tag: "The application fee burn",
+      quote:
+        "I spent $500 on application fees without ever seeing a single place. People prey on you at your lowest.",
+      fix: "Free to browse, free to match, free to message. No application fees just to view a unit.",
+    },
+    {
+      icon: Lock,
+      tag: "The identity-theft lease",
+      quote:
+        "I gave them my SSN because I was desperate to lock the place down. Now I'm dealing with frozen credit and a fake lease.",
+      fix: "We never ask for your SSN to browse. Sensitive info only goes to verified landlords at lease time.",
+    },
+    {
+      icon: Flame,
+      tag: "The kitchen hostage",
+      quote:
+        "I had to buy a mini fridge and toaster oven for my room because I can't use my own kitchen.",
+      fix: "Match on cleaning habits, schedule, guests, and noise — not just hobbies. Move in with someone you actually click with.",
+    },
+    {
+      icon: Globe2,
+      tag: "The international void",
+      quote:
+        "Accommodation is a fairy tale there amid the housing crisis. I'm terrified of sending money and showing up to a parking lot.",
+      fix: "Browse and reserve verified housing from abroad, before you board the plane. No US credit history required to search.",
+    },
+    {
+      icon: AlertTriangle,
+      tag: "The 12-month trap",
+      quote:
+        "Luxury student living shouldn't mean a 12-month lease for a 9-month school year. If you don't sign in February, it's all gone.",
+      fix: "Semester-length and short-term subleases, surfaced first. Pay for the months you actually need.",
+    },
+  ];
+  return (
+    <section
+      id="real-stories"
+      aria-labelledby="real-stories-heading"
+      className="bg-tint py-24"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+            Real stories
+          </div>
+          <h2
+            id="real-stories-heading"
+            className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl"
+          >
+            You're not the only one losing sleep over housing.
+          </h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+            These are real things students, interns, and international newcomers
+            wrote on Reddit. NestU is built so you don't have to.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {stories.map((s) => (
+            <StoryCard key={s.tag} {...s} />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -672,12 +875,68 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
   const [university, setUniversity] = useState("");
   const [referral, setReferral] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handle = (e: React.FormEvent) => {
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    setError(null);
+    const trimmed = email.trim().toLowerCase();
+    if (!trimmed || !trimmed.includes("@")) {
+      setError("Please enter a valid email address.");
+      return;
+    }
     setLoading(true);
-    setTimeout(() => onSubmit(), 600);
+    const { error: dbError } = await supabase.from("waitlist_signups").insert({
+      email: trimmed,
+      role: role || null,
+      university: university.trim() || null,
+      referral_code: referral.trim() || null,
+      source: "landing_form",
+      user_agent:
+        typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+    });
+    setLoading(false);
+    if (dbError) {
+      // 23505 = unique violation: already on waitlist
+      if ((dbError as { code?: string }).code === "23505") {
+        onSubmit();
+        return;
+      }
+      setError("Something went wrong. Please try again.");
+      return;
+    }
+    onSubmit();
+  };
+
+  const handleGoogle = async () => {
+    setError(null);
+    setGoogleLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setGoogleLoading(false);
+      setError("Couldn't sign in with Google. Try the email form below.");
+      return;
+    }
+    if (result.redirected) return; // browser is redirecting
+    // tokens received, session set — record signup using session email
+    const { data: userData } = await supabase.auth.getUser();
+    const userEmail = userData.user?.email?.toLowerCase();
+    if (userEmail) {
+      await supabase.from("waitlist_signups").insert({
+        email: userEmail,
+        role: role || null,
+        university: university.trim() || null,
+        referral_code: referral.trim() || null,
+        source: "google_oauth",
+        user_agent:
+          typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+      });
+    }
+    setGoogleLoading(false);
+    onSubmit();
   };
 
   return (
@@ -688,14 +947,17 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
       <div className="space-y-4">
         <button
           type="button"
-          onClick={() => onSubmit()}
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
+          onClick={handleGoogle}
+          disabled={googleLoading}
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)] disabled:opacity-60"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden>
-            <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.2s2.69-6.2 6-6.2c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 3.13 14.7 2.2 12 2.2 6.93 2.2 2.8 6.33 2.8 11.4S6.93 20.6 12 20.6c6.92 0 9.2-4.86 9.2-7.4 0-.5-.05-.88-.13-1.26L12 10.2z" />
-            <path fill="#34A853" d="M3.88 7.36l3.2 2.35C8 8.05 9.86 6.8 12 6.8c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 4.13 14.7 3.2 12 3.2 8.24 3.2 5.02 5.36 3.88 7.36z" opacity="0"/>
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.1A6.99 6.99 0 0 1 5.46 12c0-.73.13-1.44.38-2.1V7.07H2.18A11 11 0 0 0 1 12c0 1.78.43 3.46 1.18 4.93l3.66-2.83z"/>
+            <path fill="#EA4335" d="M12 4.78c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.46 14.97.5 12 .5 7.7.5 3.99 2.97 2.18 6.57l3.66 2.83C6.71 6.71 9.14 4.78 12 4.78z"/>
           </svg>
-          Continue with Google
+          {googleLoading ? "Connecting…" : "Continue with Google"}
         </button>
         <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
           <span className="h-px flex-1 bg-[var(--border)]" />
@@ -760,6 +1022,12 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 font-mono text-sm tracking-wider text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
         </div>
+
+        {error && (
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs text-destructive">
+            {error}
+          </div>
+        )}
 
         <PrimaryButton type="submit" disabled={loading} className="mt-2 w-full">
           {loading ? "Joining…" : "Get Early Access"}
@@ -965,6 +1233,7 @@ function Index() {
       <Hero onJoin={scrollToWaitlist} />
       <TopMarquee />
       <ProblemBar />
+      <RealStories />
       <HowItWorks />
       <Features />
       <WhoItsFor />
