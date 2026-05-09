@@ -1233,6 +1233,7 @@ function Index() {
       <Hero onJoin={scrollToWaitlist} />
       <TopMarquee />
       <ProblemBar />
+      <RealStories />
       <HowItWorks />
       <Features />
       <WhoItsFor />
