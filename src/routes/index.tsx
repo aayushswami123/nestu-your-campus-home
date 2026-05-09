@@ -273,6 +273,69 @@ function Hero({ onJoin }: { onJoin: () => void }) {
 }
 
 /* ---------------- Problem Bar ---------------- */
+function Marquee({
+  items,
+  variant = "light",
+  fast = false,
+}: {
+  items: { icon?: React.ReactNode; text: string }[];
+  variant?: "light" | "dark" | "accent";
+  fast?: boolean;
+}) {
+  const styles =
+    variant === "dark"
+      ? "bg-[var(--ink)] text-[var(--background)] border-y border-white/10"
+      : variant === "accent"
+      ? "bg-[var(--orange-accent)] text-white"
+      : "bg-tint text-[var(--ink)] border-y border-[var(--border)]";
+  const doubled = [...items, ...items];
+  return (
+    <div className={`marquee py-4 ${styles}`}>
+      <div className={`marquee-track ${fast ? "marquee-track-fast" : ""}`}>
+        {doubled.map((it, i) => (
+          <div
+            key={i}
+            className="flex shrink-0 items-center gap-2.5 text-sm font-medium tracking-tight"
+          >
+            {it.icon}
+            <span>{it.text}</span>
+            <span
+              aria-hidden
+              className={`ml-2.5 h-1.5 w-1.5 rounded-full ${
+                variant === "accent" ? "bg-white/70" : "bg-[var(--orange-accent)]"
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TopMarquee() {
+  const items = [
+    { icon: <ShieldCheck className="h-4 w-4" />, text: "Verified students & young professionals" },
+    { icon: <Sparkle className="h-4 w-4" />, text: "AI roommate matching" },
+    { icon: <Key className="h-4 w-4" />, text: "Real subleases, zero scams" },
+    { icon: <MapPin className="h-4 w-4" />, text: "Know the neighborhood before you sign" },
+    { icon: <Building2 className="h-4 w-4" />, text: "No broker fees, ever" },
+    { icon: <GraduationCap className="h-4 w-4" />, text: "Built for campuses everywhere" },
+  ];
+  return <Marquee items={items} variant="light" />;
+}
+
+function CtaMarquee() {
+  const items = [
+    { text: "Join the NestU waitlist" },
+    { text: "Free forever" },
+    { text: "Verified listings only" },
+    { text: "AI roommate matching" },
+    { text: "No broker fees" },
+    { text: "Coming to your campus" },
+  ];
+  return <Marquee items={items} variant="accent" fast />;
+}
+
 function ProblemBar() {
   const stats = [
     { num: "72%", caption: "of students say finding housing near campus is stressful" },
