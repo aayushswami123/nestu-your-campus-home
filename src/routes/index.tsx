@@ -939,7 +939,7 @@ function Footer({ onJoin }: { onJoin: () => void }) {
           </button>
         </div>
         <div className="mt-10 border-t border-white/10 pt-6 text-sm text-[var(--background)]/60">
-          <p>Coming to every university · © {new Date().getFullYear()} NestU</p>
+          <p>Coming to every university. © {new Date().getFullYear()} NestU.</p>
           <p className="mt-2 text-xs leading-relaxed text-[var(--background)]/45">
             NestU is a housing search platform. We are not a licensed real estate
             broker. Joining the waitlist does not constitute a lease, reservation, or
