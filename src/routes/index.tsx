@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import {
   Home,
   Check,
@@ -16,23 +18,111 @@ import {
   Plane,
   GraduationCap,
   Briefcase,
+  Ghost,
+  Flame,
+  DollarSign,
+  Globe2,
+  AlertTriangle,
+  Lock,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "NestU, find your place near campus before everyone else does" },
+      {
+        title:
+          "NestU — Verified student housing, scam-free roommate matching, no broker fees",
+      },
       {
         name: "description",
         content:
-          "Verified subleases, AI roommate matching, and neighborhood insights, built for students, interns, international students, and young professionals. Join the NestU waitlist.",
+          "Stop playing roommate roulette and get burned by Craigslist scams. Verified subleases, AI roommate matching by lifestyle, and neighborhood insights for students, interns, international students, and young professionals. Free to join.",
       },
-      { property: "og:title", content: "NestU, student housing without the hassle" },
+      {
+        name: "keywords",
+        content:
+          "student housing, verified sublease, college apartments, roommate matching, international student housing, intern housing, no broker fees, off campus housing, scam free rentals, ASU housing, university housing waitlist",
+      },
+      { name: "robots", content: "index, follow" },
+      { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "NestU" },
+      {
+        property: "og:title",
+        content: "NestU — Stop the housing fairy tale. Get verified listings instead.",
+      },
       {
         property: "og:description",
         content:
-          "Verified listings, AI roommate matching, and neighborhood intelligence. Free to join.",
+          "Verified landlords. AI roommate matching. Real neighborhood data. Built for students, interns, and young professionals near campus.",
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "NestU — Verified student housing, no scams, no broker fees",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Stop Craigslist roulette. Verified subleases, lifestyle-based roommate matching, and real neighborhood insights.",
+      },
+    ],
+    links: [{ rel: "canonical", href: "https://nestu.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "NestU",
+              url: "https://nestu.app/",
+              description:
+                "Verified student housing, AI roommate matching, and neighborhood insights for students, interns, international students, and young professionals.",
+              sameAs: [],
+            },
+            {
+              "@type": "WebSite",
+              name: "NestU",
+              url: "https://nestu.app/",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: "https://nestu.app/?q={search_term_string}",
+                "query-input": "required name=search_term_string",
+              },
+            },
+            {
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "Is NestU free to use?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. NestU is free for students, interns, international students, and young professionals. No broker fees, no charges to browse, match, or message.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "How does NestU prevent rental scams?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Every landlord submits ID and proof of ownership or management rights for the unit. Listings are reviewed before going live. Suspicious posts are removed.",
+                  },
+                },
+                {
+                  "@type": "Question",
+                  name: "Can international students sign up before arriving in the US?",
+                  acceptedAnswer: {
+                    "@type": "Answer",
+                    text: "Yes. NestU is built so you can browse verified listings and match with roommates from abroad, before you board the plane.",
+                  },
+                },
+              ],
+            },
+          ],
+        }),
       },
     ],
   }),
