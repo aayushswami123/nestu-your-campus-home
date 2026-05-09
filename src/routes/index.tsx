@@ -264,7 +264,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
           <div className="animate-fade-up text-center lg:text-left">
             <Chip>
-              <span>🏠</span>
+              <Sparkle className="h-3.5 w-3.5 text-[var(--orange-accent)]" strokeWidth={2.4} />
               <span>Launching at universities everywhere · Fall 2026</span>
             </Chip>
 
