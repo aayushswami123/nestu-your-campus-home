@@ -762,12 +762,68 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
   const [university, setUniversity] = useState("");
   const [referral, setReferral] = useState("");
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handle = (e: React.FormEvent) => {
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.trim()) return;
+    setError(null);
+    const trimmed = email.trim().toLowerCase();
+    if (!trimmed || !trimmed.includes("@")) {
+      setError("Please enter a valid email address.");
+      return;
+    }
     setLoading(true);
-    setTimeout(() => onSubmit(), 600);
+    const { error: dbError } = await supabase.from("waitlist_signups").insert({
+      email: trimmed,
+      role: role || null,
+      university: university.trim() || null,
+      referral_code: referral.trim() || null,
+      source: "landing_form",
+      user_agent:
+        typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+    });
+    setLoading(false);
+    if (dbError) {
+      // 23505 = unique violation: already on waitlist
+      if ((dbError as { code?: string }).code === "23505") {
+        onSubmit();
+        return;
+      }
+      setError("Something went wrong. Please try again.");
+      return;
+    }
+    onSubmit();
+  };
+
+  const handleGoogle = async () => {
+    setError(null);
+    setGoogleLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: window.location.origin,
+    });
+    if (result.error) {
+      setGoogleLoading(false);
+      setError("Couldn't sign in with Google. Try the email form below.");
+      return;
+    }
+    if (result.redirected) return; // browser is redirecting
+    // tokens received, session set — record signup using session email
+    const { data: userData } = await supabase.auth.getUser();
+    const userEmail = userData.user?.email?.toLowerCase();
+    if (userEmail) {
+      await supabase.from("waitlist_signups").insert({
+        email: userEmail,
+        role: role || null,
+        university: university.trim() || null,
+        referral_code: referral.trim() || null,
+        source: "google_oauth",
+        user_agent:
+          typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+      });
+    }
+    setGoogleLoading(false);
+    onSubmit();
   };
 
   return (
@@ -778,14 +834,17 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
       <div className="space-y-4">
         <button
           type="button"
-          onClick={() => onSubmit()}
-          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
+          onClick={handleGoogle}
+          disabled={googleLoading}
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)] disabled:opacity-60"
         >
           <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden>
-            <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.2s2.69-6.2 6-6.2c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 3.13 14.7 2.2 12 2.2 6.93 2.2 2.8 6.33 2.8 11.4S6.93 20.6 12 20.6c6.92 0 9.2-4.86 9.2-7.4 0-.5-.05-.88-.13-1.26L12 10.2z" />
-            <path fill="#34A853" d="M3.88 7.36l3.2 2.35C8 8.05 9.86 6.8 12 6.8c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 4.13 14.7 3.2 12 3.2 8.24 3.2 5.02 5.36 3.88 7.36z" opacity="0"/>
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.26 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.1A6.99 6.99 0 0 1 5.46 12c0-.73.13-1.44.38-2.1V7.07H2.18A11 11 0 0 0 1 12c0 1.78.43 3.46 1.18 4.93l3.66-2.83z"/>
+            <path fill="#EA4335" d="M12 4.78c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.46 14.97.5 12 .5 7.7.5 3.99 2.97 2.18 6.57l3.66 2.83C6.71 6.71 9.14 4.78 12 4.78z"/>
           </svg>
-          Continue with Google
+          {googleLoading ? "Connecting…" : "Continue with Google"}
         </button>
         <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
           <span className="h-px flex-1 bg-[var(--border)]" />
@@ -850,6 +909,12 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 font-mono text-sm tracking-wider text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
         </div>
+
+        {error && (
+          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs text-destructive">
+            {error}
+          </div>
+        )}
 
         <PrimaryButton type="submit" disabled={loading} className="mt-2 w-full">
           {loading ? "Joining…" : "Get Early Access"}
