@@ -600,7 +600,7 @@ function Universities() {
           ))}
         </div>
         <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-foreground">
-          Request NestU at your university — the most requested schools launch next.
+          Request NestU at your university. The most requested schools launch next.
         </p>
       </div>
     </section>
