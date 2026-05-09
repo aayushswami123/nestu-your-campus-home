@@ -132,8 +132,8 @@ function Nav({ onJoin }: { onJoin: () => void }) {
 /* ---------------- Hero ---------------- */
 function ListingMock() {
   return (
-    <div className="relative w-full max-w-sm">
-      <div className="rounded-2xl border border-[var(--border)] bg-card p-3 shadow-soft">
+    <div className="relative w-full max-w-sm pb-10 sm:pb-16 sm:pl-6">
+      <div className="rounded-2xl border border-[var(--border)] bg-card p-3 shadow-soft lift">
         <div className="relative h-48 overflow-hidden rounded-xl bg-gradient-to-br from-[oklch(0.85_0.04_60)] to-[oklch(0.72_0.06_45)]">
           <div className="absolute inset-0 grain opacity-40" />
           <div className="absolute left-3 top-3">
@@ -176,7 +176,7 @@ function ListingMock() {
         </div>
       </div>
       {/* floating roommate match card */}
-      <div className="absolute -bottom-6 -left-6 hidden w-48 rotate-[-3deg] rounded-xl border border-[var(--border)] bg-card p-3 shadow-soft sm:block">
+      <div className="absolute bottom-0 left-0 hidden w-48 rotate-[-3deg] rounded-xl border border-[var(--border)] bg-card p-3 shadow-soft sm:block">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--sage)] text-xs font-medium text-white">
             PM
