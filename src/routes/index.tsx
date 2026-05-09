@@ -11,7 +11,6 @@ import {
   Users,
   MapPin,
   Sparkles,
-  ChevronDown,
   ShieldCheck,
   Sparkle,
   Building2,
@@ -92,35 +91,7 @@ export const Route = createFileRoute("/")({
                 "query-input": "required name=search_term_string",
               },
             },
-            {
-              "@type": "FAQPage",
-              mainEntity: [
-                {
-                  "@type": "Question",
-                  name: "Is NestU free to use?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Yes. NestU is free for students, interns, international students, and young professionals. No broker fees, no charges to browse, match, or message.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: "How does NestU prevent rental scams?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Every landlord submits ID and proof of ownership or management rights for the unit. Listings are reviewed before going live. Suspicious posts are removed.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: "Can international students sign up before arriving in the US?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Yes. NestU is built so you can browse verified listings and match with roommates from abroad, before you board the plane.",
-                  },
-                },
-              ],
-            },
+            
           ],
         }),
       },
@@ -292,7 +263,7 @@ function Hero({ onJoin }: { onJoin: () => void }) {
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
           <div className="animate-fade-up text-center lg:text-left">
             <Chip>
-              <span>🏠</span>
+              <Sparkle className="h-3.5 w-3.5 text-[var(--orange-accent)]" strokeWidth={2.4} />
               <span>Launching at universities everywhere · Fall 2026</span>
             </Chip>
 
@@ -712,17 +683,19 @@ function Features() {
 
 /* ---------------- Who It's For ---------------- */
 function AudienceCard({
-  emoji,
+  icon: Icon,
   title,
   body,
 }: {
-  emoji: string;
+  icon: typeof GraduationCap;
   title: string;
   body: string;
 }) {
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
-      <div className="mb-3 text-3xl">{emoji}</div>
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--ink)] text-[var(--background)]">
+        <Icon className="h-5 w-5" strokeWidth={2} />
+      </div>
       <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{body}</p>
     </div>
@@ -742,22 +715,22 @@ function WhoItsFor() {
       </div>
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <AudienceCard
-          emoji="🎓"
+          icon={GraduationCap}
           title="Students"
           body="Find verified housing before you arrive. On-campus alternatives that don't require already knowing someone."
         />
         <AudienceCard
-          emoji="✈️"
+          icon={Plane}
           title="International students"
           body="Arriving from abroad? Browse and reserve before you land. No local network needed."
         />
         <AudienceCard
-          emoji="💼"
+          icon={Briefcase}
           title="Interns & young professionals"
           body="Short-term furnished subleases near your office or campus. Month-to-month options, no 12-month commitment."
         />
         <AudienceCard
-          emoji="🏠"
+          icon={Building2}
           title="Landlords & property owners"
           body="List your unit to verified students and young professionals. Free to list. No middleman, no broker fees."
         />
@@ -1122,75 +1095,6 @@ function Waitlist({
   );
 }
 
-/* ---------------- FAQ ---------------- */
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-b border-[var(--border)]">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between gap-4 py-5 text-left"
-      >
-        <span className="font-serif text-lg text-[var(--ink)] sm:text-xl">{q}</span>
-        <ChevronDown
-          className={`h-5 w-5 shrink-0 text-[var(--ink)]/60 transition ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-      <div
-        className={`grid overflow-hidden transition-all duration-300 ${
-          open ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0">
-          <p className="text-[15px] leading-relaxed text-muted-foreground">{a}</p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Faq() {
-  const items = [
-    {
-      q: "Is NestU free to use?",
-      a: "Yes. NestU is free for students, interns, international students, and young professionals. There are no broker fees and no charges to browse, match, or message.",
-    },
-    {
-      q: "How does landlord verification work?",
-      a: "Every landlord submits government ID and proof of ownership or management rights for the unit. Listings are reviewed before they go live. We remove anything that doesn't pass review.",
-    },
-    {
-      q: "What makes the roommate matching accurate?",
-      a: "We score compatibility across sleep schedule, cleanliness, budget, study habits, and lifestyle preferences. You only see people whose habits genuinely line up with yours.",
-    },
-    {
-      q: "When does NestU launch at my university?",
-      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next, so adding your university when you join helps move it up.",
-    },
-    {
-      q: "I'm a landlord. How do I list my property?",
-      a: "Join the waitlist and select 'Landlord'. You'll get early access to list units to thousands of verified students with no middleman and no broker fees.",
-    },
-  ];
-  return (
-    <section className="mx-auto max-w-3xl px-6 py-24">
-      <div className="text-center">
-        <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
-          FAQ
-        </div>
-        <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
-          Questions, answered.
-        </h2>
-      </div>
-      <div className="mt-12">
-        {items.map((it) => (
-          <FaqItem key={it.q} {...it} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
 /* ---------------- Footer ---------------- */
 function Footer({ onJoin }: { onJoin: () => void }) {
   return (
@@ -1241,7 +1145,6 @@ function Index() {
       <Universities />
       <Testimonials />
       <Waitlist submitted={submitted} setSubmitted={setSubmitted} />
-      <Faq />
       <Footer onJoin={scrollToWaitlist} />
     </div>
   );
