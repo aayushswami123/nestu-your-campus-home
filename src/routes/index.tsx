@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Verified subleases, AI roommate matching, and neighborhood insights — built for students. Join the NestU waitlist for early access.",
+          "Verified subleases, AI roommate matching, and neighborhood insights, built for students, interns, international students, and young professionals. Join the NestU waitlist.",
       },
       { property: "og:title", content: "NestU — Student housing, without the hassle" },
       {
