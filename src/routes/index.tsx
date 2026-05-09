@@ -963,10 +963,12 @@ function Index() {
     <div className="min-h-screen">
       <Nav onJoin={scrollToWaitlist} />
       <Hero onJoin={scrollToWaitlist} />
+      <TopMarquee />
       <ProblemBar />
       <HowItWorks />
       <Features />
       <WhoItsFor />
+      <CtaMarquee />
       <Universities />
       <Testimonials />
       <Waitlist submitted={submitted} setSubmitted={setSubmitted} />
