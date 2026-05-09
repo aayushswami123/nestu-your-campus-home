@@ -518,7 +518,7 @@ function AudienceCard({
   body: string;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft">
+    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
       <div className="mb-3 text-3xl">{emoji}</div>
       <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{body}</p>
@@ -537,7 +537,7 @@ function WhoItsFor() {
           Built for everyone near campus.
         </h2>
       </div>
-      <div className="mt-14 grid gap-5 sm:grid-cols-2">
+      <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <AudienceCard
           emoji="🎓"
           title="Students"
@@ -550,13 +550,13 @@ function WhoItsFor() {
         />
         <AudienceCard
           emoji="💼"
-          title="Interns"
-          body="Short-term furnished subleases near your office. Month-to-month options, no 12-month commitment."
+          title="Interns & young professionals"
+          body="Short-term furnished subleases near your office or campus. Month-to-month options, no 12-month commitment."
         />
         <AudienceCard
           emoji="🏠"
           title="Landlords & property owners"
-          body="List your unit to thousands of verified students. Free to list. No middleman, no broker fees."
+          body="List your unit to verified students and young professionals. Free to list. No middleman, no broker fees."
         />
       </div>
     </section>
