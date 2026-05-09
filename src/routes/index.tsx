@@ -1145,7 +1145,6 @@ function Index() {
       <Universities />
       <Testimonials />
       <Waitlist submitted={submitted} setSubmitted={setSubmitted} />
-      <Faq />
       <Footer onJoin={scrollToWaitlist} />
     </div>
   );
