@@ -215,8 +215,8 @@ function Hero({ onJoin }: { onJoin: () => void }) {
             </h1>
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
-              Verified subleases, AI roommate matching, and neighborhood insights —
-              all built for students.
+              Verified subleases, AI roommate matching, and neighborhood insights.
+              Built for students, interns, international students, and young professionals.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
@@ -250,13 +250,15 @@ function Hero({ onJoin }: { onJoin: () => void }) {
               </span>
             </div>
 
-            <div className="mt-8 flex justify-center lg:justify-start">
-              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--sage)] pulse-dot" />
-                </span>
-                <span className="font-medium">2,400+ students</span> already on the
-                waitlist
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <GraduationCap className="h-3.5 w-3.5" /> Students
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <Plane className="h-3.5 w-3.5" /> International students
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <Briefcase className="h-3.5 w-3.5" /> Interns &amp; young professionals
               </span>
             </div>
           </div>
