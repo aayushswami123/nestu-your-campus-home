@@ -686,6 +686,22 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
       className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft sm:p-8"
     >
       <div className="space-y-4">
+        <button
+          type="button"
+          onClick={() => onSubmit()}
+          className="flex w-full items-center justify-center gap-3 rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
+        >
+          <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden>
+            <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.24 1.4-1.66 4.1-5.5 4.1-3.31 0-6-2.74-6-6.2s2.69-6.2 6-6.2c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 3.13 14.7 2.2 12 2.2 6.93 2.2 2.8 6.33 2.8 11.4S6.93 20.6 12 20.6c6.92 0 9.2-4.86 9.2-7.4 0-.5-.05-.88-.13-1.26L12 10.2z" />
+            <path fill="#34A853" d="M3.88 7.36l3.2 2.35C8 8.05 9.86 6.8 12 6.8c1.88 0 3.14.8 3.86 1.49l2.64-2.55C16.95 4.13 14.7 3.2 12 3.2 8.24 3.2 5.02 5.36 3.88 7.36z" opacity="0"/>
+          </svg>
+          Continue with Google
+        </button>
+        <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="h-px flex-1 bg-[var(--border)]" />
+          or
+          <span className="h-px flex-1 bg-[var(--border)]" />
+        </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-[var(--ink)]">
             Email address
@@ -695,9 +711,12 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@university.edu"
+            placeholder="you@email.com"
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-base text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
+          <p className="mt-1.5 text-xs text-muted-foreground">
+            Any email works. School email not required.
+          </p>
         </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
@@ -725,7 +744,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             type="text"
             value={university}
             onChange={(e) => setUniversity(e.target.value)}
-            placeholder="e.g. UC Berkeley · UT Austin · NYU"
+            placeholder="e.g. UC Berkeley, UT Austin, NYU"
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
         </div>
@@ -748,7 +767,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
         </PrimaryButton>
 
         <p className="text-center text-xs text-muted-foreground">
-          2,400+ already joined · No spam · Unsubscribe anytime
+          No spam. Unsubscribe anytime.
         </p>
       </div>
     </form>
