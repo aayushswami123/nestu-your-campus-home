@@ -499,6 +499,8 @@ function RealStories() {
       fix: "Semester-length and short-term subleases, surfaced first. Pay for the months you actually need.",
     },
   ];
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? stories : stories.slice(0, 3);
   return (
     <section
       id="real-stories"
@@ -523,9 +525,21 @@ function RealStories() {
         </div>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {stories.map((s) => (
+          {visible.map((s) => (
             <StoryCard key={s.tag} {...s} />
           ))}
+        </div>
+        <div className="mt-10 flex justify-center">
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-card px-5 py-3 text-sm font-medium text-[var(--ink)] shadow-soft transition hover:bg-[var(--background)]"
+          >
+            {expanded ? "Show less" : `View more stories (${stories.length - 3})`}
+            <ArrowRight
+              className={`h-4 w-4 transition ${expanded ? "rotate-90" : ""}`}
+            />
+          </button>
         </div>
       </div>
     </section>
