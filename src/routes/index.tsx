@@ -10,6 +10,12 @@ import {
   MapPin,
   Sparkles,
   ChevronDown,
+  ShieldCheck,
+  Sparkle,
+  Building2,
+  Plane,
+  GraduationCap,
+  Briefcase,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
