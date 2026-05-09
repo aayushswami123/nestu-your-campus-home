@@ -1,47 +1,600 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Home, Check, Copy, ArrowRight, ShieldCheck, Users, MapPin } from "lucide-react";
+import {
+  Home,
+  Check,
+  Copy,
+  ArrowRight,
+  Key,
+  Users,
+  MapPin,
+  Sparkles,
+  ChevronDown,
+} from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "NestU — Student housing near campus, without the hassle" },
+      { title: "NestU — Find your place near campus, before everyone else does" },
       {
         name: "description",
         content:
-          "Join the NestU waitlist. Verified sublease & housing listings, AI roommate matching, and nearby essentials — starting at ASU Tempe, expanding to all universities.",
+          "Verified subleases, AI roommate matching, and neighborhood insights — built for students. Join the NestU waitlist for early access.",
       },
-      { property: "og:title", content: "NestU — Your next home near campus" },
+      { property: "og:title", content: "NestU — Student housing, without the hassle" },
       {
         property: "og:description",
         content:
-          "Verified listings, AI roommate matching, no broker fees. Starting at ASU Tempe, Fall 2026.",
+          "Verified listings, AI roommate matching, and neighborhood intelligence. Free to join.",
       },
     ],
   }),
 });
 
-function Logo() {
+/* ---------------- Logo ---------------- */
+function Logo({ tone = "ink" }: { tone?: "ink" | "light" }) {
+  const isLight = tone === "light";
   return (
     <div className="flex items-center gap-2">
-      <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--ink)]">
-        <Home className="h-4 w-4 text-[var(--background)]" strokeWidth={2.2} />
+      <div
+        className={`relative flex h-8 w-8 items-center justify-center rounded-lg ${
+          isLight ? "bg-[var(--background)]" : "bg-[var(--ink)]"
+        }`}
+      >
+        <Home
+          className={`h-4 w-4 ${isLight ? "text-[var(--ink)]" : "text-[var(--background)]"}`}
+          strokeWidth={2.2}
+        />
         <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-[var(--orange-accent)] ring-2 ring-[var(--background)]" />
       </div>
-      <span className="font-serif text-2xl tracking-tight text-[var(--ink)]">NestU</span>
+      <span
+        className={`font-serif text-2xl tracking-tight ${
+          isLight ? "text-[var(--background)]" : "text-[var(--ink)]"
+        }`}
+      >
+        NestU
+      </span>
     </div>
   );
 }
 
-function Chip({ children }: { children: React.ReactNode }) {
+/* ---------------- Buttons ---------------- */
+function PrimaryButton({
+  children,
+  className = "",
+  ...rest
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-sm text-[var(--ink)] shadow-soft">
+    <button
+      {...rest}
+      className={`group inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--orange-accent)] px-6 py-3.5 text-base font-medium text-white shadow-soft transition hover:opacity-95 disabled:opacity-60 ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+function GhostButton({
+  children,
+  className = "",
+  ...rest
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...rest}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-card px-6 py-3.5 text-base font-medium text-[var(--ink)] transition hover:bg-[var(--background)] ${className}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function Chip({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-sm text-[var(--ink)] shadow-soft ${className}`}
+    >
       {children}
     </span>
   );
 }
 
+/* ---------------- Nav ---------------- */
+function Nav({ onJoin }: { onJoin: () => void }) {
+  return (
+    <header className="sticky top-0 z-40 border-b border-[var(--border)]/60 bg-[var(--background)]/85 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <Logo />
+        <button
+          onClick={onJoin}
+          className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--orange-accent)] px-4 py-2.5 text-sm font-medium text-white shadow-soft transition hover:opacity-95"
+        >
+          Join Waitlist
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </div>
+    </header>
+  );
+}
+
+/* ---------------- Hero ---------------- */
+function ListingMock() {
+  return (
+    <div className="relative w-full max-w-sm">
+      <div className="rounded-2xl border border-[var(--border)] bg-card p-3 shadow-soft">
+        <div className="relative h-48 overflow-hidden rounded-xl bg-gradient-to-br from-[oklch(0.85_0.04_60)] to-[oklch(0.72_0.06_45)]">
+          <div className="absolute inset-0 grain opacity-40" />
+          <div className="absolute left-3 top-3">
+            <span className="rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-medium text-[var(--ink)] shadow-soft">
+              ✓ Verified
+            </span>
+          </div>
+          <div className="absolute right-3 top-3">
+            <span className="rounded-full bg-[var(--sage)] px-2.5 py-1 text-[11px] font-medium text-white shadow-soft">
+              94% match
+            </span>
+          </div>
+        </div>
+        <div className="px-2 pb-2 pt-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h4 className="font-serif text-lg leading-tight text-[var(--ink)]">
+                Sunlit 2BR near campus
+              </h4>
+              <p className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+                <MapPin className="h-3 w-3" /> 6 min walk to campus
+              </p>
+            </div>
+            <div className="text-right">
+              <div className="font-serif text-xl text-[var(--ink)]">$890</div>
+              <div className="text-[11px] text-muted-foreground">/mo</div>
+            </div>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            <span className="rounded-full bg-[var(--background)] px-2 py-0.5 text-[11px] text-[var(--ink)]/80">
+              Furnished
+            </span>
+            <span className="rounded-full bg-[var(--background)] px-2 py-0.5 text-[11px] text-[var(--ink)]/80">
+              Sublease
+            </span>
+            <span className="rounded-full bg-[var(--background)] px-2 py-0.5 text-[11px] text-[var(--ink)]/80">
+              Aug → Dec
+            </span>
+          </div>
+        </div>
+      </div>
+      {/* floating roommate match card */}
+      <div className="absolute -bottom-6 -left-6 hidden w-48 rotate-[-3deg] rounded-xl border border-[var(--border)] bg-card p-3 shadow-soft sm:block">
+        <div className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--sage)] text-xs font-medium text-white">
+            PM
+          </div>
+          <div>
+            <div className="text-xs font-medium text-[var(--ink)]">Roommate match</div>
+            <div className="text-[10px] text-muted-foreground">Sleep · Budget · Habits</div>
+          </div>
+        </div>
+        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-[var(--background)]">
+          <div className="h-full w-[88%] rounded-full bg-[var(--sage)]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Hero({ onJoin }: { onJoin: () => void }) {
+  return (
+    <section className="hero-radial relative overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 grain opacity-50" />
+      <div className="relative mx-auto max-w-6xl px-6 pb-20 pt-14 sm:pt-20 lg:pb-28">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr]">
+          <div className="animate-fade-up text-center lg:text-left">
+            <Chip>
+              <span>🏠</span>
+              <span>Launching at universities everywhere · Fall 2026</span>
+            </Chip>
+
+            <h1 className="mt-6 font-serif text-[44px] leading-[1.02] text-[var(--ink)] sm:text-6xl lg:text-[76px]">
+              Find your place near campus.
+              <br />
+              <span className="italic text-[var(--ink)]/70">
+                Before everyone else does.
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground lg:mx-0">
+              Verified subleases, AI roommate matching, and neighborhood insights —
+              all built for students.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+              <PrimaryButton onClick={onJoin}>
+                Get Early Access
+                <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              </PrimaryButton>
+              <GhostButton
+                onClick={() =>
+                  document
+                    .getElementById("how-it-works")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+              >
+                See how it works
+              </GhostButton>
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-[var(--ink)]/75 lg:justify-start">
+              <span className="flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-[var(--sage)]" strokeWidth={2.5} /> Free
+                forever
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-[var(--sage)]" strokeWidth={2.5} /> No
+                broker fees
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Check className="h-4 w-4 text-[var(--sage)]" strokeWidth={2.5} />{" "}
+                Verified listings only
+              </span>
+            </div>
+
+            <div className="mt-8 flex justify-center lg:justify-start">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-card px-3.5 py-1.5 text-xs text-[var(--ink)]/80 shadow-soft">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--sage)] pulse-dot" />
+                </span>
+                <span className="font-medium">2,400+ students</span> already on the
+                waitlist
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-center lg:justify-end animate-fade-up-delay-2">
+            <ListingMock />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Problem Bar ---------------- */
+function ProblemBar() {
+  const stats = [
+    { num: "72%", caption: "of students say finding housing near campus is stressful" },
+    { num: "1 in 3", caption: "students have been scammed or nearly scammed on Craigslist" },
+    { num: "$400+", caption: "average broker fee just to view an apartment" },
+  ];
+  return (
+    <section className="bg-[var(--ink)] py-16 text-[var(--background)]">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 md:grid-cols-3">
+        {stats.map((s) => (
+          <div key={s.num} className="text-center md:text-left">
+            <div className="font-serif text-5xl tracking-tight sm:text-6xl">{s.num}</div>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--background)]/65">
+              {s.caption}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- How It Works ---------------- */
+function HowItWorks() {
+  const steps = [
+    {
+      n: "01",
+      t: "Create your profile",
+      d: "Tell us your budget, move-in date, university, and lifestyle preferences. Takes about 3 minutes.",
+    },
+    {
+      n: "02",
+      t: "Browse verified listings",
+      d: "Filter by room type, price, distance to campus, furnished, and pet-friendly. Every listing is landlord-verified.",
+    },
+    {
+      n: "03",
+      t: "Match and move in",
+      d: "AI matches you with compatible roommates. Chat, connect, and sign — all in one place.",
+    },
+  ];
+  return (
+    <section id="how-it-works" className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-2xl text-center">
+        <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+          How it works
+        </div>
+        <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+          Three steps. No spreadsheets, no scams.
+        </h2>
+      </div>
+
+      <div className="relative mt-16 grid gap-10 md:grid-cols-3">
+        <div
+          aria-hidden
+          className="absolute left-[16%] right-[16%] top-12 hidden border-t border-dashed border-[var(--border)] md:block"
+        />
+        {steps.map((s) => (
+          <div key={s.n} className="relative text-center md:text-left">
+            <div className="relative z-10 mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-[var(--border)] bg-card font-serif text-2xl text-[var(--ink)] shadow-soft md:mx-0">
+              {s.n}
+            </div>
+            <h3 className="mt-5 font-serif text-2xl text-[var(--ink)]">{s.t}</h3>
+            <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
+              {s.d}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Features ---------------- */
+function FeatureCard({
+  icon: Icon,
+  eyebrow,
+  title,
+  body,
+  tags,
+  span = false,
+}: {
+  icon: typeof Key;
+  eyebrow: string;
+  title: string;
+  body: string;
+  tags: string[];
+  span?: boolean;
+}) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-8 shadow-soft sm:p-10 ${
+        span ? "md:col-span-2" : ""
+      }`}
+    >
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[var(--orange-accent)]">
+        {eyebrow}
+      </div>
+      <div className="mt-5 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--background)] text-[var(--ink)]">
+        <Icon className="h-5 w-5" strokeWidth={1.8} />
+      </div>
+      <h3 className="mt-5 font-serif text-3xl leading-[1.1] text-[var(--ink)] sm:text-4xl">
+        {title}
+      </h3>
+      <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+        {body}
+      </p>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {tags.map((t) => (
+          <span
+            key={t}
+            className="rounded-full border border-[var(--border)] bg-[var(--background)] px-3 py-1 text-xs text-[var(--ink)]/80"
+          >
+            {t}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Features() {
+  return (
+    <section className="bg-tint py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="text-sm uppercase tracking-[0.18em] text-[var(--sage)]">
+            Features
+          </div>
+          <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+            Everything campus housing should have been.
+          </h2>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          <FeatureCard
+            icon={Key}
+            eyebrow="Verified marketplace"
+            title="Real listings. Zero scams."
+            body="Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk. No fake posts."
+            tags={["Short-term available", "Furnished options", "Semester leases"]}
+            span
+          />
+          <FeatureCard
+            icon={Sparkles}
+            eyebrow="AI matching"
+            title="Your next roommate, not your next nightmare."
+            body="Answer 8 questions about your habits. Our AI scores compatibility across sleep schedule, cleanliness, budget, and lifestyle."
+            tags={["Sleep schedule", "Cleanliness", "Budget fit", "Lifestyle"]}
+          />
+          <FeatureCard
+            icon={MapPin}
+            eyebrow="Neighborhood intel"
+            title="Know the neighborhood before you sign."
+            body="Every listing shows walkability to campus, nearby food, transit, gyms, and grocery stores. Decide with full context, not just rent price."
+            tags={["Distance to campus", "Food nearby", "Transit access"]}
+          />
+          <FeatureCard
+            icon={Users}
+            eyebrow="Community"
+            title="Move in with people you actually click with."
+            body="Group chat with roommate matches, share listings, and coordinate move-in dates — all in one place, before lease day."
+            tags={["Group chats", "Saved listings", "Move-in planning"]}
+            span
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Who It's For ---------------- */
+function AudienceCard({
+  emoji,
+  title,
+  body,
+}: {
+  emoji: string;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft">
+      <div className="mb-3 text-3xl">{emoji}</div>
+      <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{body}</p>
+    </div>
+  );
+}
+
+function WhoItsFor() {
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-2xl text-center">
+        <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+          Who it's for
+        </div>
+        <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+          Built for everyone near campus.
+        </h2>
+      </div>
+      <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        <AudienceCard
+          emoji="🎓"
+          title="Students"
+          body="Find verified housing before you arrive. On-campus alternatives that don't require already knowing someone."
+        />
+        <AudienceCard
+          emoji="✈️"
+          title="International students"
+          body="Arriving from abroad? Browse and reserve before you land. No local network needed."
+        />
+        <AudienceCard
+          emoji="💼"
+          title="Interns"
+          body="Short-term furnished subleases near your office. Month-to-month options, no 12-month commitment."
+        />
+        <AudienceCard
+          emoji="🏠"
+          title="Landlords & property owners"
+          body="List your unit to thousands of verified students. Free to list. No middleman, no broker fees."
+        />
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Universities ---------------- */
+function Universities() {
+  const schools = [
+    "UC Berkeley",
+    "UT Austin",
+    "University of Michigan",
+    "NYU",
+    "Georgia Tech",
+    "UCLA",
+    "University of Illinois",
+    "Penn State",
+    "USC",
+    "University of Washington",
+  ];
+  return (
+    <section className="bg-tint py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="text-sm uppercase tracking-[0.18em] text-[var(--sage)]">
+            Launching everywhere
+          </div>
+          <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+            Coming to a campus near you.
+          </h2>
+        </div>
+
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-2.5">
+          {schools.map((s) => (
+            <span
+              key={s}
+              className="rounded-full border border-[var(--border)] bg-card px-4 py-2 text-sm text-[var(--ink)]/85 shadow-soft"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        <p className="mx-auto mt-8 max-w-xl text-center text-sm text-muted-foreground">
+          Request NestU at your university — the most requested schools launch next.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Testimonials ---------------- */
+function Testimonials() {
+  const quotes = [
+    {
+      q: "I spent 3 weeks on Craigslist and got ghosted 11 times. NestU had me in a place within a week.",
+      n: "Priya M.",
+      m: "CS Junior",
+      i: "PM",
+    },
+    {
+      q: "The roommate matching actually works. I answered 8 questions and my match was almost identical to me in habits.",
+      n: "Marcus T.",
+      m: "Business Senior",
+      i: "MT",
+    },
+    {
+      q: "As an international student I had no idea how to find housing before arriving. NestU made it possible.",
+      n: "Wei L.",
+      m: "Graduate Student",
+      i: "WL",
+    },
+  ];
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-24">
+      <div className="mx-auto max-w-2xl text-center">
+        <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+          Beta feedback
+        </div>
+        <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+          What students are saying.
+        </h2>
+      </div>
+
+      <div className="mt-14 grid gap-5 md:grid-cols-3">
+        {quotes.map((t) => (
+          <figure
+            key={t.n}
+            className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft"
+          >
+            <blockquote className="font-serif text-xl leading-snug text-[var(--ink)]">
+              "{t.q}"
+            </blockquote>
+            <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--border)] pt-5">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--ink)] text-xs font-medium text-[var(--background)]">
+                {t.i}
+              </span>
+              <span>
+                <div className="text-sm font-medium text-[var(--ink)]">{t.n}</div>
+                <div className="text-xs text-muted-foreground">{t.m}</div>
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Waitlist ---------------- */
 function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -59,7 +612,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
   return (
     <form
       onSubmit={handle}
-      className="mx-auto w-full max-w-[520px] rounded-2xl border border-[var(--border)] bg-card p-6 shadow-soft sm:p-8"
+      className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft sm:p-8"
     >
       <div className="space-y-4">
         <div>
@@ -71,44 +624,40 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@asu.edu"
+            placeholder="you@university.edu"
             className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3.5 text-base text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
           />
         </div>
-
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
-              I am a… <span className="text-muted-foreground/70">(optional)</span>
-            </label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
-            >
-              <option value="">Select…</option>
-              <option>Student</option>
-              <option>Intern</option>
-              <option>Young professional</option>
-              <option>International student</option>
-              <option>Landlord</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
-              University <span className="text-muted-foreground/70">(optional)</span>
-            </label>
-            <input
-              type="text"
-              value={university}
-              onChange={(e) => setUniversity(e.target.value)}
-              placeholder="e.g. ASU Tempe"
-              className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
-            />
-          </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
+            I am a…
+          </label>
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
+          >
+            <option value="">Select…</option>
+            <option>Student</option>
+            <option>Intern</option>
+            <option>Young professional</option>
+            <option>International student</option>
+            <option>Landlord</option>
+            <option>Other</option>
+          </select>
         </div>
-
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
+            Which university?
+          </label>
+          <input
+            type="text"
+            value={university}
+            onChange={(e) => setUniversity(e.target.value)}
+            placeholder="e.g. UC Berkeley · UT Austin · NYU"
+            className="w-full rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm text-[var(--ink)] outline-none transition focus:border-[var(--orange-accent)] focus:ring-2 focus:ring-[var(--orange-accent)]/20"
+          />
+        </div>
         <div>
           <label className="mb-1.5 block text-sm font-medium text-muted-foreground">
             Referral code <span className="text-muted-foreground/70">(optional)</span>
@@ -122,17 +671,13 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
           />
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="group mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--ink)] px-6 py-4 text-base font-medium text-[var(--background)] transition hover:opacity-90 disabled:opacity-60"
-        >
+        <PrimaryButton type="submit" disabled={loading} className="mt-2 w-full">
           {loading ? "Joining…" : "Get Early Access"}
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-        </button>
+        </PrimaryButton>
 
         <p className="text-center text-xs text-muted-foreground">
-          Free to join. No spam. Unsubscribe anytime.
+          2,400+ already joined · No spam · Unsubscribe anytime
         </p>
       </div>
     </form>
@@ -141,7 +686,7 @@ function WaitlistForm({ onSubmit }: { onSubmit: () => void }) {
 
 function SuccessState() {
   const [copied, setCopied] = useState(false);
-  const referralLink = "nestu.app/r/u-12";
+  const referralLink = "nestu.app/r/u-2401";
 
   const copy = () => {
     navigator.clipboard?.writeText(`https://${referralLink}`);
@@ -155,13 +700,14 @@ function SuccessState() {
   const waUrl = `https://wa.me/?text=${shareText}%20https://${referralLink}`;
 
   return (
-    <div className="mx-auto w-full max-w-[520px] rounded-2xl border border-[var(--border)] bg-card p-8 text-center shadow-soft animate-fade-up">
-      <div className="mx-auto mb-4 text-4xl">🎉</div>
-      <h3 className="font-serif text-3xl text-[var(--ink)]">You're #12 on the waitlist!</h3>
+    <div className="mx-auto w-full max-w-[480px] rounded-2xl border border-[var(--border)] bg-card p-8 text-center shadow-soft animate-fade-up">
+      <div className="mx-auto mb-3 text-4xl">🎉</div>
+      <h3 className="font-serif text-3xl text-[var(--ink)]">
+        You're #2,401 on the list!
+      </h3>
       <p className="mt-2 text-sm text-muted-foreground">
-        Share your link to move up the list.
+        Share your link to move up faster.
       </p>
-
       <div className="mt-6 flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--background)] p-1.5 pl-4">
         <span className="flex-1 truncate text-left font-mono text-sm text-[var(--ink)]">
           {referralLink}
@@ -174,19 +720,18 @@ function SuccessState() {
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-
       <div className="mt-5 grid grid-cols-2 gap-3">
         <a
           href={waUrl}
           target="_blank"
           rel="noreferrer"
-          className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-medium text-white transition hover:opacity-90"
+          className="flex items-center justify-center rounded-xl bg-[#25D366] px-4 py-3 text-sm font-medium text-white transition hover:opacity-90"
         >
           WhatsApp
         </a>
         <button
           onClick={copy}
-          className="flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
+          className="flex items-center justify-center rounded-xl border border-[var(--border)] bg-card px-4 py-3 text-sm font-medium text-[var(--ink)] transition hover:bg-[var(--background)]"
         >
           Instagram
         </button>
@@ -195,182 +740,148 @@ function SuccessState() {
   );
 }
 
-function FeatureCard({
-  icon: Icon,
-  title,
-  desc,
+function Waitlist({
+  submitted,
+  setSubmitted,
 }: {
-  icon: typeof ShieldCheck;
-  title: string;
-  desc: string;
+  submitted: boolean;
+  setSubmitted: (v: boolean) => void;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft transition hover:-translate-y-0.5">
-      <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--background)] text-[var(--ink)]">
-        <Icon className="h-5 w-5" strokeWidth={1.8} />
+    <section id="waitlist" className="bg-tint py-24">
+      <div className="mx-auto max-w-3xl px-6 text-center">
+        <h2 className="font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+          Get early access.
+        </h2>
+        <p className="mx-auto mt-3 max-w-lg text-lg text-muted-foreground">
+          Join the waitlist. Be the first to find your place when we launch.
+        </p>
+        <div className="mt-10">
+          {submitted ? <SuccessState /> : <WaitlistForm onSubmit={() => setSubmitted(true)} />}
+        </div>
       </div>
-      <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
-      <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{desc}</p>
-    </div>
+    </section>
   );
 }
 
-function AudienceCard({
-  emoji,
-  title,
-  bullets,
-}: {
-  emoji: string;
-  title: string;
-  bullets: [string, string];
-}) {
+/* ---------------- FAQ ---------------- */
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft">
-      <div className="mb-3 text-3xl">{emoji}</div>
-      <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
-      <ul className="mt-4 space-y-2.5">
-        {bullets.map((b) => (
-          <li key={b} className="flex items-start gap-2.5 text-[15px] text-[var(--ink)]/85">
-            <Check
-              className="mt-0.5 h-4 w-4 shrink-0 text-[var(--sage)]"
-              strokeWidth={2.5}
-            />
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="border-b border-[var(--border)]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex w-full items-center justify-between gap-4 py-5 text-left"
+      >
+        <span className="font-serif text-lg text-[var(--ink)] sm:text-xl">{q}</span>
+        <ChevronDown
+          className={`h-5 w-5 shrink-0 text-[var(--ink)]/60 transition ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        className={`grid overflow-hidden transition-all duration-300 ${
+          open ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="min-h-0">
+          <p className="text-[15px] leading-relaxed text-muted-foreground">{a}</p>
+        </div>
+      </div>
     </div>
   );
 }
 
+function Faq() {
+  const items = [
+    {
+      q: "Is NestU free to use?",
+      a: "Yes — NestU is free for students, interns, and young professionals. There are no broker fees and no charges to browse, match, or message.",
+    },
+    {
+      q: "How does landlord verification work?",
+      a: "Every landlord submits government ID and proof of ownership or management rights for the unit. Listings are reviewed before they go live. We remove anything that doesn't pass review.",
+    },
+    {
+      q: "What makes the roommate matching accurate?",
+      a: "We score compatibility across sleep schedule, cleanliness, budget, study habits, and lifestyle preferences. You only see people whose habits genuinely line up with yours.",
+    },
+    {
+      q: "When does NestU launch at my university?",
+      a: "We're rolling out campus by campus, starting Fall 2026. The most-requested schools from waitlist signups launch next — adding your university when you join helps move it up.",
+    },
+    {
+      q: "I'm a landlord — how do I list my property?",
+      a: "Join the waitlist and select 'Landlord'. You'll get early access to list units to thousands of verified students with no middleman and no broker fees.",
+    },
+  ];
+  return (
+    <section className="mx-auto max-w-3xl px-6 py-24">
+      <div className="text-center">
+        <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+          FAQ
+        </div>
+        <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
+          Questions, answered.
+        </h2>
+      </div>
+      <div className="mt-12">
+        {items.map((it) => (
+          <FaqItem key={it.q} {...it} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Footer ---------------- */
+function Footer({ onJoin }: { onJoin: () => void }) {
+  return (
+    <footer className="bg-[var(--ink)] text-[var(--background)]">
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <Logo tone="light" />
+          <button
+            onClick={onJoin}
+            className="inline-flex items-center gap-2 rounded-xl bg-[var(--orange-accent)] px-5 py-3 text-sm font-medium text-white shadow-soft transition hover:opacity-95"
+          >
+            Get Early Access
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+        <div className="mt-10 border-t border-white/10 pt-6 text-sm text-[var(--background)]/60">
+          <p>Coming to every university · © {new Date().getFullYear()} NestU</p>
+          <p className="mt-2 text-xs leading-relaxed text-[var(--background)]/45">
+            NestU is a housing search platform. We are not a licensed real estate
+            broker. Joining the waitlist does not constitute a lease, reservation, or
+            commitment of any kind.
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+/* ---------------- Page ---------------- */
 function Index() {
   const [submitted, setSubmitted] = useState(false);
 
+  const scrollToWaitlist = () => {
+    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <header className="mx-auto flex max-w-6xl items-center justify-between px-6 pt-8">
-        <Logo />
-      </header>
-
-      {/* Hero */}
-      <section className="hero-radial">
-        <div className="mx-auto max-w-3xl px-6 pb-16 pt-12 text-center sm:pt-20">
-          <div className="animate-fade-up">
-            <Chip>
-              <span className="text-[var(--orange-accent)]">🚀</span>
-              <span>Starting at ASU Tempe · Coming to all universities</span>
-            </Chip>
-          </div>
-
-          <h1 className="mt-7 font-serif text-5xl leading-[1.05] text-[var(--ink)] animate-fade-up-delay-1 sm:text-6xl md:text-[68px]">
-            Your next home near campus.
-            <br />
-            <span className="italic text-[var(--ink)]/70">No hassle, no scams.</span>
-          </h1>
-
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground animate-fade-up-delay-2">
-            Verified sublease listings, AI roommate matching, and nearby essentials —
-            built for students, interns, and young professionals.
-          </p>
-
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-2 animate-fade-up-delay-2">
-            <Chip>🎓 Students</Chip>
-            <Chip>💼 Interns</Chip>
-            <Chip>🌐 Young professionals</Chip>
-          </div>
-
-          <div className="mt-12 animate-fade-up-delay-3">
-            {submitted ? <SuccessState /> : <WaitlistForm onSubmit={() => setSubmitted(true)} />}
-          </div>
-        </div>
-      </section>
-
-      {/* Why NestU */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
-            Why NestU
-          </div>
-          <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
-            Housing, finally built for the way students actually live.
-          </h2>
-        </div>
-
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          <FeatureCard
-            icon={ShieldCheck}
-            title="Verified listings"
-            desc="Identity-checked landlords and reviewed listings. Zero Craigslist risk, zero broker fees."
-          />
-          <FeatureCard
-            icon={Users}
-            title="AI roommate matching"
-            desc="Match on sleep schedule, budget, cleanliness, and lifestyle — not just who replied first."
-          />
-          <FeatureCard
-            icon={MapPin}
-            title="Sublease marketplace"
-            desc="Short-term, furnished, and semester-long options near campus. See nearby food, transit, and essentials."
-          />
-        </div>
-      </section>
-
-      {/* Who it's for */}
-      <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <div className="text-sm uppercase tracking-[0.18em] text-[var(--sage)]">
-            Who it's for
-          </div>
-          <h2 className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl">
-            Whether you're moving in for a semester or a summer.
-          </h2>
-        </div>
-
-        <div className="mt-14 grid gap-5 md:grid-cols-3">
-          <AudienceCard
-            emoji="🎓"
-            title="Students"
-            bullets={[
-              "Find verified housing within walking distance of class",
-              "Match with roommates who fit your schedule and habits",
-            ]}
-          />
-          <AudienceCard
-            emoji="💼"
-            title="Interns"
-            bullets={[
-              "Short-term, furnished sublets that fit your start date",
-              "No long leases, no surprise deposits",
-            ]}
-          />
-          <AudienceCard
-            emoji="🌐"
-            title="Young professionals"
-            bullets={[
-              "Move-in ready places near campus neighborhoods",
-              "Discover nearby food, transit, and essentials at a glance",
-            ]}
-          />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-[var(--border)]">
-        <div className="mx-auto max-w-6xl px-6 py-10 text-center">
-          <div className="mb-4 flex justify-center">
-            <Logo />
-          </div>
-          <p className="text-sm text-[var(--ink)]/70">
-            Starting at ASU Tempe · No spam · Unsubscribe anytime
-          </p>
-          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-muted-foreground">
-            NestU is launching Fall 2026. Listings, availability, and features described
-            here are forthcoming. Joining the waitlist does not constitute a lease,
-            reservation, or commitment of any kind. © {new Date().getFullYear()} NestU.
-          </p>
-        </div>
-      </footer>
+      <Nav onJoin={scrollToWaitlist} />
+      <Hero onJoin={scrollToWaitlist} />
+      <ProblemBar />
+      <HowItWorks />
+      <Features />
+      <WhoItsFor />
+      <Universities />
+      <Testimonials />
+      <Waitlist submitted={submitted} setSubmitted={setSubmitted} />
+      <Faq />
+      <Footer onJoin={scrollToWaitlist} />
     </div>
   );
 }
