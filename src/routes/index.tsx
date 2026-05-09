@@ -684,17 +684,19 @@ function Features() {
 
 /* ---------------- Who It's For ---------------- */
 function AudienceCard({
-  emoji,
+  icon: Icon,
   title,
   body,
 }: {
-  emoji: string;
+  icon: typeof GraduationCap;
   title: string;
   body: string;
 }) {
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
-      <div className="mb-3 text-3xl">{emoji}</div>
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--ink)] text-[var(--background)]">
+        <Icon className="h-5 w-5" strokeWidth={2} />
+      </div>
       <h3 className="font-serif text-2xl text-[var(--ink)]">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">{body}</p>
     </div>
@@ -714,22 +716,22 @@ function WhoItsFor() {
       </div>
       <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <AudienceCard
-          emoji="🎓"
+          icon={GraduationCap}
           title="Students"
           body="Find verified housing before you arrive. On-campus alternatives that don't require already knowing someone."
         />
         <AudienceCard
-          emoji="✈️"
+          icon={Plane}
           title="International students"
           body="Arriving from abroad? Browse and reserve before you land. No local network needed."
         />
         <AudienceCard
-          emoji="💼"
+          icon={Briefcase}
           title="Interns & young professionals"
           body="Short-term furnished subleases near your office or campus. Month-to-month options, no 12-month commitment."
         />
         <AudienceCard
-          emoji="🏠"
+          icon={Building2}
           title="Landlords & property owners"
           body="List your unit to verified students and young professionals. Free to list. No middleman, no broker fees."
         />
