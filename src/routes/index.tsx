@@ -475,7 +475,7 @@ function Features() {
             icon={Key}
             eyebrow="Verified marketplace"
             title="Real listings. Zero scams."
-            body="Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk. No fake posts."
+            body="Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk, no fake posts."
             tags={["Short-term available", "Furnished options", "Semester leases"]}
             span
           />
@@ -497,7 +497,7 @@ function Features() {
             icon={Users}
             eyebrow="Community"
             title="Move in with people you actually click with."
-            body="Group chat with roommate matches, share listings, and coordinate move-in dates — all in one place, before lease day."
+            body="Group chat with roommate matches, share listings, and coordinate move-in dates, all in one place before lease day."
             tags={["Group chats", "Saved listings", "Move-in planning"]}
             span
           />
