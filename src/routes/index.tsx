@@ -644,7 +644,7 @@ function Testimonials() {
         {quotes.map((t) => (
           <figure
             key={t.n}
-            className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft"
+            className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift"
           >
             <blockquote className="font-serif text-xl leading-snug text-[var(--ink)]">
               "{t.q}"
