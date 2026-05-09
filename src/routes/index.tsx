@@ -11,7 +11,6 @@ import {
   Users,
   MapPin,
   Sparkles,
-  ChevronDown,
   ShieldCheck,
   Sparkle,
   Building2,
