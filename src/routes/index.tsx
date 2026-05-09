@@ -92,35 +92,7 @@ export const Route = createFileRoute("/")({
                 "query-input": "required name=search_term_string",
               },
             },
-            {
-              "@type": "FAQPage",
-              mainEntity: [
-                {
-                  "@type": "Question",
-                  name: "Is NestU free to use?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Yes. NestU is free for students, interns, international students, and young professionals. No broker fees, no charges to browse, match, or message.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: "How does NestU prevent rental scams?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Every landlord submits ID and proof of ownership or management rights for the unit. Listings are reviewed before going live. Suspicious posts are removed.",
-                  },
-                },
-                {
-                  "@type": "Question",
-                  name: "Can international students sign up before arriving in the US?",
-                  acceptedAnswer: {
-                    "@type": "Answer",
-                    text: "Yes. NestU is built so you can browse verified listings and match with roommates from abroad, before you board the plane.",
-                  },
-                },
-              ],
-            },
+            
           ],
         }),
       },
