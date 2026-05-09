@@ -819,6 +819,8 @@ function Testimonials() {
       i: "WL",
     },
   ];
+  const [expanded, setExpanded] = useState(false);
+  const visible = expanded ? quotes : quotes.slice(0, 1);
   return (
     <section className="mx-auto max-w-6xl px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
@@ -831,7 +833,7 @@ function Testimonials() {
       </div>
 
       <div className="mt-14 grid gap-5 md:grid-cols-3">
-        {quotes.map((t) => (
+        {visible.map((t) => (
           <figure
             key={t.n}
             className="flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift"
@@ -850,6 +852,16 @@ function Testimonials() {
             </figcaption>
           </figure>
         ))}
+      </div>
+      <div className="mt-10 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setExpanded((v) => !v)}
+          className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-card px-5 py-3 text-sm font-medium text-[var(--ink)] shadow-soft transition hover:bg-[var(--background)]"
+        >
+          {expanded ? "Show less" : `Read more reviews (${quotes.length - 1})`}
+          <ArrowRight className={`h-4 w-4 transition ${expanded ? "rotate-90" : ""}`} />
+        </button>
       </div>
     </section>
   );
