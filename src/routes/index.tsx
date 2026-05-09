@@ -451,6 +451,116 @@ function ProblemBar() {
   );
 }
 
+/* ---------------- Real Stories (Reddit-inspired pain points) ---------------- */
+function StoryCard({
+  icon: Icon,
+  tag,
+  quote,
+  fix,
+}: {
+  icon: typeof Ghost;
+  tag: string;
+  quote: string;
+  fix: string;
+}) {
+  return (
+    <div className="group relative flex flex-col rounded-2xl border border-[var(--border)] bg-card p-7 shadow-soft lift">
+      <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-[var(--orange-accent)]">
+        <Icon className="h-4 w-4" strokeWidth={2} />
+        {tag}
+      </div>
+      <blockquote className="mt-5 font-serif text-xl leading-snug text-[var(--ink)]">
+        &ldquo;{quote}&rdquo;
+      </blockquote>
+      <div className="mt-5 flex items-center gap-2 border-t border-[var(--border)] pt-4 text-[13px] text-[var(--ink)]/80">
+        <Check className="h-4 w-4 shrink-0 text-[var(--sage)]" strokeWidth={2.5} />
+        <span>
+          <span className="font-medium text-[var(--ink)]">NestU fixes this:</span>{" "}
+          {fix}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function RealStories() {
+  const stories = [
+    {
+      icon: Ghost,
+      tag: "The phantom landlord",
+      quote:
+        "They wanted a $50 deposit just to get the code to the lockbox. I paid, and the code didn't work. Then they stopped responding.",
+      fix: "Every landlord is identity-verified. Every listing is reviewed before going live. No ghost owners, no lockbox tricks.",
+    },
+    {
+      icon: DollarSign,
+      tag: "The application fee burn",
+      quote:
+        "I spent $500 on application fees without ever seeing a single place. People prey on you at your lowest.",
+      fix: "Free to browse, free to match, free to message. No application fees just to view a unit.",
+    },
+    {
+      icon: Lock,
+      tag: "The identity-theft lease",
+      quote:
+        "I gave them my SSN because I was desperate to lock the place down. Now I'm dealing with frozen credit and a fake lease.",
+      fix: "We never ask for your SSN to browse. Sensitive info only goes to verified landlords at lease time.",
+    },
+    {
+      icon: Flame,
+      tag: "The kitchen hostage",
+      quote:
+        "I had to buy a mini fridge and toaster oven for my room because I can't use my own kitchen.",
+      fix: "Match on cleaning habits, schedule, guests, and noise — not just hobbies. Move in with someone you actually click with.",
+    },
+    {
+      icon: Globe2,
+      tag: "The international void",
+      quote:
+        "Accommodation is a fairy tale there amid the housing crisis. I'm terrified of sending money and showing up to a parking lot.",
+      fix: "Browse and reserve verified housing from abroad, before you board the plane. No US credit history required to search.",
+    },
+    {
+      icon: AlertTriangle,
+      tag: "The 12-month trap",
+      quote:
+        "Luxury student living shouldn't mean a 12-month lease for a 9-month school year. If you don't sign in February, it's all gone.",
+      fix: "Semester-length and short-term subleases, surfaced first. Pay for the months you actually need.",
+    },
+  ];
+  return (
+    <section
+      id="real-stories"
+      aria-labelledby="real-stories-heading"
+      className="bg-tint py-24"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto max-w-2xl text-center">
+          <div className="text-sm uppercase tracking-[0.18em] text-[var(--orange-accent)]">
+            Real stories
+          </div>
+          <h2
+            id="real-stories-heading"
+            className="mt-3 font-serif text-4xl text-[var(--ink)] sm:text-5xl"
+          >
+            You're not the only one losing sleep over housing.
+          </h2>
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
+            These are real things students, interns, and international newcomers
+            wrote on Reddit. NestU is built so you don't have to.
+          </p>
+        </div>
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {stories.map((s) => (
+            <StoryCard key={s.tag} {...s} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- How It Works ---------------- */
 function HowItWorks() {
   const steps = [
