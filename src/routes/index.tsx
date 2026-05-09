@@ -427,7 +427,7 @@ function FeatureCard({
 }) {
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-8 shadow-soft sm:p-10 ${
+      className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-card p-8 shadow-soft sm:p-10 lift ${
         span ? "md:col-span-2" : ""
       }`}
     >
