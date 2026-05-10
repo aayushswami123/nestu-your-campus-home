@@ -16,9 +16,21 @@ const supabase = createClient(
 const autosend = new Autosend(process.env.AUTOSEND_API_KEY!);
 const FROM_EMAIL = process.env.FROM_EMAIL ?? 'hello@nestu.app';
 const FROM_NAME = 'NestU';
-const CORS_ORIGIN = process.env.FRONTEND_URL ?? 'https://nestu.app';
+const ALLOWED_ORIGINS = (process.env.FRONTEND_URL ?? 'https://nestu.app')
+  .split(',')
+  .map(o => o.trim());
 
-app.use(cors({ origin: CORS_ORIGIN, methods: ['GET', 'POST'] }));
+app.use(cors({
+  origin: (origin, cb) => {
+    // Allow requests with no origin (curl, Render health checks)
+    if (!origin) return cb(null, true);
+    if (ALLOWED_ORIGINS.some(o => origin === o || origin.endsWith('.vercel.app'))) {
+      return cb(null, true);
+    }
+    cb(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST'],
+}));
 app.use(express.json({ limit: '16kb' }));
 
 // ---------------------------------------------------------------------------
