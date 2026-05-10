@@ -38,13 +38,25 @@ const KeyIcon = (p: React.SVGProps<SVGSVGElement>) => <svg {...p} viewBox="0 0 2
 function Logo({ light = false }: { light?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <div className={`relative flex h-7 w-7 items-center justify-center rounded-lg ${light ? "bg-[#FAFAF7]" : "bg-[#0E0F0C]"}`}>
-        <HomeIcon className={`h-3.5 w-3.5 ${light ? "text-[#0E0F0C]" : "text-[#FAFAF7]"}`} />
-        <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#C4622D]" style={{ boxShadow: `0 0 0 2px ${light ? "#0E0F0C" : "#FAFAF7"}` }} />
-      </div>
-      <span className={`font-serif text-[22px] tracking-[-0.02em] ${light ? "text-[#FAFAF7]" : "text-[#0E0F0C]"}`}>NestU</span>
+      <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#C75A38" />
+        <path d="M19 17 L19 38 Q19 52 32 52 Q45 52 45 38 L45 17 L38 17 L38 38 Q38 45 32 45 Q26 45 26 38 L26 17 Z" fill="#F2ECE2" />
+        <ellipse cx="32" cy="41" rx="3.6" ry="4.6" fill={light ? "#C75A38" : "#F2ECE2"} />
+      </svg>
+      <span style={{ fontFamily: '"Bricolage Grotesque", system-ui, sans-serif', fontWeight: 800, fontSize: '22px', letterSpacing: '-0.04em' }}
+        className={light ? "text-[#F2ECE2]" : "text-[#1C1916]"}>
+        NestU
+      </span>
     </div>
   );
+}
+
+/* ── smooth scroll helper ── */
+function scrollTo(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 72;
+  window.scrollTo({ top, behavior: "smooth" });
 }
 
 /* ── Nav ── */
@@ -54,8 +66,11 @@ function Nav({ onJoin }: { onJoin: () => void }) {
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-5">
         <Logo />
         <nav className="hidden items-center gap-7 md:flex">
-          {[["#how", "How it works"], ["#features", "Features"], ["#schools", "Universities"]].map(([href, label]) => (
-            <a key={href} href={href} className="text-sm text-[#6B6C66] transition-colors hover:text-[#0E0F0C]">{label}</a>
+          {[["how", "How it works"], ["features", "Features"], ["schools", "Universities"]].map(([id, label]) => (
+            <button key={id} onClick={() => scrollTo(id)}
+              className="text-sm text-[#6B6C66] transition-colors hover:text-[#0E0F0C]">
+              {label}
+            </button>
           ))}
         </nav>
         <button onClick={onJoin} className="flex items-center gap-2 rounded-[10px] bg-[#0E0F0C] px-4 py-2.5 text-sm font-medium text-[#FAFAF7] transition hover:-translate-y-px hover:shadow-lg active:scale-[0.98]">
