@@ -22,12 +22,11 @@ const ALLOWED_ORIGINS = (process.env.FRONTEND_URL ?? 'https://nestu.app')
 
 app.use(cors({
   origin: (origin, cb) => {
-    // Allow requests with no origin (curl, Render health checks)
     if (!origin) return cb(null, true);
-    if (ALLOWED_ORIGINS.some(o => origin === o || origin.endsWith('.vercel.app'))) {
-      return cb(null, true);
-    }
-    cb(new Error('Not allowed by CORS'));
+    const allowed =
+      ALLOWED_ORIGINS.includes(origin) ||
+      origin.endsWith('.vercel.app');
+    cb(null, allowed);
   },
   methods: ['GET', 'POST'],
 }));
