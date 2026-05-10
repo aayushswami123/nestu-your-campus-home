@@ -51,7 +51,7 @@ function Logo({ light = false }: { light?: boolean }) {
 function Nav({ onJoin }: { onJoin: () => void }) {
   return (
     <header className="sticky top-0 z-50 border-b border-[#E8E3D7]/60 bg-[#FAFAF7]/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-4">
+      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-5">
         <Logo />
         <nav className="hidden items-center gap-7 md:flex">
           {[["#how", "How it works"], ["#features", "Features"], ["#schools", "Universities"]].map(([href, label]) => (
@@ -360,9 +360,9 @@ function Community() {
         <span className="text-[11px] uppercase tracking-[0.14em] text-[#95968F]">Building together</span>
         <span className="font-serif text-[18px] italic text-[#2A2B27]/70">We're not just launching a product</span>
         <span className="h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
-        <span className="font-serif text-[18px] text-[#2A2B27]/70">we're creating a community of students,</span>
+        <span className="font-serif text-[18px] text-[#2A2B27]/70">we're building a community</span>
         <span className="h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
-        <span className="font-serif text-[18px] italic text-[#2A2B27]/70">interns, internationals & landlords</span>
+        <span className="font-serif text-[18px] italic text-[#2A2B27]/70">students, interns, internationals & landlords</span>
       </div>
     </section>
   );
@@ -498,11 +498,11 @@ function Stats() {
             <p className="mt-2.5 text-sm leading-[1.55] text-[#6B6C66] max-w-[28ch]">of students say finding housing near campus is stressful.</p>
           </div>
           <div>
-            <div className="font-serif text-[clamp(48px,6vw,72px)] leading-[0.95] text-[#0E0F0C]">1<span className="text-[#C4622D] italic">:</span>3</div>
+            <div className="font-serif text-[clamp(48px,6vw,72px)] leading-[0.95] text-[#0E0F0C]">1<span className="text-[#C4622D]">:</span>3</div>
             <p className="mt-2.5 text-sm leading-[1.55] text-[#6B6C66] max-w-[28ch]">students have been scammed or nearly scammed on Craigslist.</p>
           </div>
           <div>
-            <div className="font-serif text-[clamp(48px,6vw,72px)] leading-[0.95] text-[#0E0F0C]">$<CountUp to={400} /><span className="text-[#C4622D] italic">+</span></div>
+            <div className="font-serif text-[clamp(48px,6vw,72px)] leading-[0.95] text-[#0E0F0C]">$<CountUp to={400} /><span className="text-[#C4622D]">+</span></div>
             <p className="mt-2.5 text-sm leading-[1.55] text-[#6B6C66] max-w-[28ch]">average broker fee just to view an apartment.</p>
           </div>
         </div>
@@ -516,7 +516,7 @@ function HowItWorks() {
   const steps = [
     { n: "01", t: "Create your profile", d: "Tell us your budget, move-in date, university, and lifestyle preferences. Takes about 3 minutes." },
     { n: "02", t: "Browse verified listings", d: "Filter by price, distance to campus, furnishing, pets. Every listing is landlord-verified before going live." },
-    { n: "03", t: "Match and move in", d: "AI matches you with compatible roommates. Chat, connect, and sign — all in one place." },
+    { n: "03", t: "Match and move in", d: "AI matches you with compatible roommates. Chat, connect, and sign. All in one place." },
   ];
   return (
     <section id="how" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-24">
@@ -528,7 +528,7 @@ function HowItWorks() {
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {steps.map((s, i) => (
             <div key={s.n} data-reveal data-delay={String(i + 1)} className="card-hover rounded-[22px] border border-[#E8E3D7] bg-white p-7">
-              <div className="font-serif text-[14px] tracking-[0.04em] text-[#C4622D]">— {s.n}</div>
+              <div className="font-serif text-[22px] tracking-[0.02em] text-[#C4622D]">{s.n}</div>
               <h3 className="mt-3.5 font-serif text-[26px] leading-[1.1] tracking-[-0.012em] text-[#0E0F0C]">{s.t}</h3>
               <p className="mt-2.5 text-[15px] leading-[1.55] text-[#6B6C66]">{s.d}</p>
             </div>
