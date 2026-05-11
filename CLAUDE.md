@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ### Frontend (root)
+
 ```bash
 npm run dev        # start Vite dev server (http://localhost:5173)
 npm run build      # production build → dist/
@@ -13,6 +14,7 @@ npm run format     # Prettier
 ```
 
 ### Backend (backend/)
+
 ```bash
 cd backend
 npm run dev        # tsx watch (auto-reload)
@@ -54,6 +56,7 @@ nestu-your-campus-home/
 **Supabase usage:** Client-side only, anon key, used exclusively for Google OAuth (`supabase.auth.signInWithOAuth`). All database writes go to the backend API.
 
 **Google OAuth flow:**
+
 1. User clicks "Continue with Google" → `supabase.auth.signInWithOAuth({ provider: 'google', redirectTo: window.location.origin })`
 2. Browser redirects to Google, then back to the app
 3. `onAuthStateChange` fires `SIGNED_IN` in `App.tsx` → calls backend API → signs out (email collected, session not needed)
@@ -65,12 +68,14 @@ nestu-your-campus-home/
 **Stack:** Express + TypeScript (ESM), deployed to Render.
 
 **Endpoints:**
+
 - `GET /health` — Render health check
 - `POST /api/waitlist` — validates email, inserts to Supabase (service role), sends Resend email (fire-and-forget)
 
 **Duplicate email:** Postgres unique constraint returns code `23505` → backend returns `{ success: true, code: "DUPLICATE" }`, no email sent.
 
 **Key env vars** (set in Render dashboard):
+
 - `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` — from Supabase project settings → API
 - `RESEND_API_KEY` — from resend.com dashboard
 - `FROM_EMAIL` — sender (domain must be verified in Resend)
@@ -80,13 +85,13 @@ nestu-your-campus-home/
 
 All colors in `src/styles.css` as CSS custom properties (oklch):
 
-| Token | Value | Use |
-|---|---|---|
-| `--ink` | near-black | primary text |
-| `--orange-accent` | brand orange | CTAs, highlights |
-| `--sage` | muted green | success, secondary |
-| `--background` | off-white | page background |
-| `--border` | warm beige | borders |
+| Token             | Value        | Use                |
+| ----------------- | ------------ | ------------------ |
+| `--ink`           | near-black   | primary text       |
+| `--orange-accent` | brand orange | CTAs, highlights   |
+| `--sage`          | muted green  | success, secondary |
+| `--background`    | off-white    | page background    |
+| `--border`        | warm beige   | borders            |
 
 Reference them in Tailwind as `text-[var(--ink)]`, `bg-[var(--orange-accent)]`, etc.
 
