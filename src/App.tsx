@@ -70,7 +70,7 @@ function Nav({ onJoin }: { onJoin: () => void }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E8E3D7]/60 bg-[#FAFAF7]/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-5">
+      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-4 py-4 sm:px-7 sm:py-5">
         <button onClick={() => scrollTo("top")} aria-label="Back to top">
           <Logo />
         </button>
@@ -123,7 +123,7 @@ function WaitlistForm({ onSuccess }: { onSuccess: (r: BackendResult) => void }) 
   };
 
   return (
-    <form onSubmit={submit} className="rounded-[22px] border border-[#E8E3D7] bg-white p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] relative overflow-hidden" style={{ background: "linear-gradient(135deg, rgba(196,98,45,.04), transparent 40%, rgba(92,122,90,.04))" }}>
+    <form onSubmit={submit} className="rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] relative overflow-hidden" style={{ background: "linear-gradient(135deg, rgba(196,98,45,.04), transparent 40%, rgba(92,122,90,.04))" }}>
       {/* Google */}
       <button type="button" onClick={handleGoogle} disabled={googleLoading}
         className="mb-1 flex w-full items-center justify-center gap-2.5 rounded-[10px] border border-[#E8E3D7] bg-[#FAFAF7] px-4 py-2.5 text-sm font-medium text-[#0E0F0C] transition hover:bg-[#F1EEE6] hover:border-[#D9D3C3] active:scale-[0.98] disabled:opacity-60">
@@ -141,7 +141,7 @@ function WaitlistForm({ onSuccess }: { onSuccess: (r: BackendResult) => void }) 
         <span className="text-[12px] text-[#95968F]">Any email works. School email not required.</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3.5">
         <div className="flex flex-col gap-1.5">
           <label className={LABEL}>Name <span className={OPT}>optional</span></label>
           <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Jordan" className={INPUT} />
@@ -192,7 +192,7 @@ function GoogleDetailsForm({ email, name, onSuccess }: { email: string; name: st
   };
 
   return (
-    <form onSubmit={submit} className="rounded-[22px] border border-[#E8E3D7] bg-white p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)]">
+    <form onSubmit={submit} className="rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)]">
       <div className="mb-5 flex items-center gap-3 rounded-xl border border-[#5C7A5A]/30 bg-[#5C7A5A]/8 px-4 py-3">
         <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#5C7A5A] text-white">
           <CheckIcon className="h-4 w-4" />
@@ -203,7 +203,7 @@ function GoogleDetailsForm({ email, name, onSuccess }: { email: string; name: st
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3.5">
         <div className="flex flex-col gap-1.5">
           <label className={LABEL}>I am a…</label>
           <select value={role} onChange={e => setRole(e.target.value)} className={INPUT}>
@@ -248,7 +248,7 @@ function SuccessState({ referralCode, position }: { referralCode?: string; posit
   const waText = encodeURIComponent(`Just joined the NestU waitlist — verified student housing, no scams: ${fullLink}`);
 
   return (
-    <div className="rounded-[22px] border border-[#E8E3D7] bg-white p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] text-center">
+    <div className="rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] text-center">
       <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#5C7A5A]/15 text-[#5C7A5A]">
         <CheckIcon className="h-6 w-6" />
       </div>
@@ -287,7 +287,7 @@ function SuccessState({ referralCode, position }: { referralCode?: string; posit
 /* ── OAuth Error ── */
 function OAuthError({ onBack }: { onBack: () => void }) {
   return (
-    <div className="rounded-[22px] border border-[#E8E3D7] bg-white p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] text-center space-y-4">
+    <div className="rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] text-center space-y-4">
       <p className="font-serif text-[24px] text-[#0E0F0C]">Couldn't reach our server</p>
       <p className="text-sm text-[#6B6C66]">Google sign-in worked but we couldn't save your spot. Please try the email form.</p>
       <button onClick={onBack} className="inline-flex items-center gap-2 rounded-[10px] bg-[#C4622D] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90">
@@ -324,15 +324,15 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
   }, []);
 
   return (
-    <section className="relative overflow-hidden px-0 py-16 lg:py-24" id="top">
+    <section className="relative overflow-hidden px-0 py-10 sm:py-16 lg:py-24" id="top">
       <div className="pointer-events-none absolute inset-0" ref={bgRef}>
         <div className="hero-grid" />
         <div className="hero-glow-a" />
         <div className="hero-glow-b" />
         <div className="hero-glow-c" />
       </div>
-      <div className="relative mx-auto max-w-[1180px] px-7">
-        <div className="grid items-center gap-16 lg:grid-cols-[1.15fr_1fr]">
+      <div className="relative mx-auto max-w-[1180px] px-4 sm:px-7">
+        <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[1.15fr_1fr]">
           {/* Left copy */}
           <div data-reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-[#E8E3D7] bg-white px-3 py-1.5 text-[13px] text-[#2A2B27] shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)]">
@@ -379,12 +379,12 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
 function Community() {
   return (
     <section className="border-y border-[#E8E3D7] bg-[#F1EEE6]">
-      <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-center gap-6 px-7 py-5 text-[#6B6C66]">
+      <div className="mx-auto flex max-w-[1180px] flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-2 sm:gap-6 px-4 sm:px-7 py-5 text-[#6B6C66] text-center">
         <span className="text-[11px] uppercase tracking-[0.14em] text-[#95968F]">Building together</span>
         <span className="font-serif text-[18px] italic text-[#2A2B27]/70">We're not just launching a product</span>
-        <span className="h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
+        <span className="hidden sm:block h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
         <span className="font-serif text-[18px] text-[#2A2B27]/70">we're building a community</span>
-        <span className="h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
+        <span className="hidden sm:block h-1.5 w-1.5 rounded-full bg-[#C4622D]" />
         <span className="font-serif text-[18px] italic text-[#2A2B27]/70">students, interns, internationals & landlords</span>
       </div>
     </section>
@@ -394,9 +394,9 @@ function Community() {
 /* ── Featured Testimonial ── */
 function FeaturedTestimonial() {
   return (
-    <section className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-16">
-      <div className="mx-auto max-w-[1180px] px-7">
-        <div data-reveal className="mx-auto max-w-[880px] rounded-[22px] border border-[#E8E3D7] bg-white p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] relative overflow-hidden md:p-14">
+    <section className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-10 md:py-16">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
+        <div data-reveal className="mx-auto max-w-[880px] rounded-[22px] border border-[#E8E3D7] bg-white p-6 sm:p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] relative overflow-hidden md:p-14">
           <p className="font-serif text-[clamp(24px,3.4vw,36px)] leading-[1.25] tracking-[-0.012em] text-[#0E0F0C]">
             <span className="font-serif text-[90px] leading-[0] text-[#C4622D] mr-2" style={{ verticalAlign: "-28px" }}>"</span>
             NestU is what happens when someone finally listens to students. Verified listings,
@@ -420,9 +420,9 @@ function FeaturedTestimonial() {
 /* ── Sublease Pitch ── */
 function SubleasePitch() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-[1180px] px-7">
-        <div data-reveal className="sublease-card relative grid gap-9 overflow-hidden rounded-[22px] border border-[#E8E3D7] bg-white p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] lg:grid-cols-[1.05fr_.95fr] lg:gap-14 lg:p-14 items-center">
+    <section className="py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
+        <div data-reveal className="sublease-card relative grid gap-9 overflow-hidden rounded-[22px] border border-[#E8E3D7] bg-white p-6 sm:p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] lg:grid-cols-[1.05fr_.95fr] lg:gap-14 lg:p-14 items-center">
           <div className="absolute -right-28 -top-28 h-72 w-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(196,98,45,.18), transparent 65%)", pointerEvents: "none" }} />
           <div className="relative z-10">
             <span className="text-[12px] uppercase tracking-[0.16em] text-[#C4622D] font-medium">Posting your sublease?</span>
@@ -507,15 +507,15 @@ function CountUp({ to, suffix = "", duration = 1400 }: { to: number; suffix?: st
 /* ── Stats ── */
 function Stats() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-[1180px] px-7">
+    <section className="py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
         <div className="section-head">
           <span data-reveal className="text-[12px] uppercase tracking-[0.16em] text-[#C4622D] font-medium">The problem</span>
           <h2 data-reveal data-delay="1" className="mt-3 font-serif text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-[-0.02em] text-[#0E0F0C] max-w-[22ch]">
             Finding housing near campus is broken.
           </h2>
         </div>
-        <div data-reveal data-delay="2" className="mt-10 grid gap-11 rounded-[22px] border border-[#E8E3D7] bg-white p-11 md:grid-cols-3">
+        <div data-reveal data-delay="2" className="mt-10 grid gap-8 sm:gap-11 rounded-[22px] border border-[#E8E3D7] bg-white p-6 sm:p-11 md:grid-cols-3">
           <div>
             <div className="font-serif text-[clamp(48px,6vw,72px)] leading-[0.95] text-[#C4622D] italic"><CountUp to={72} suffix="%" /></div>
             <p className="mt-2.5 text-sm leading-[1.55] text-[#6B6C66] max-w-[28ch]">of students say finding housing near campus is stressful.</p>
@@ -542,15 +542,15 @@ function HowItWorks() {
     { n: "03", t: "Match and move in", d: "AI matches you with compatible roommates. Chat, connect, and sign. All in one place." },
   ];
   return (
-    <section id="how" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-24">
-      <div className="mx-auto max-w-[1180px] px-7">
+    <section id="how" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
         <span data-reveal className="text-[12px] uppercase tracking-[0.16em] text-[#C4622D] font-medium">How it works</span>
         <h2 data-reveal data-delay="1" className="mt-3 font-serif text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-[-0.02em] text-[#0E0F0C] max-w-[22ch]">
           Three steps. No spreadsheets, no scams.
         </h2>
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {steps.map((s, i) => (
-            <div key={s.n} data-reveal data-delay={String(i + 1)} className="card-hover rounded-[22px] border border-[#E8E3D7] bg-white p-7">
+            <div key={s.n} data-reveal data-delay={String(i + 1)} className="card-hover rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-7">
               <div className="font-serif text-[22px] tracking-[0.02em] text-[#C4622D]">{s.n}</div>
               <h3 className="mt-3.5 font-serif text-[26px] leading-[1.1] tracking-[-0.012em] text-[#0E0F0C]">{s.t}</h3>
               <p className="mt-2.5 text-[15px] leading-[1.55] text-[#6B6C66]">{s.d}</p>
@@ -571,15 +571,15 @@ function Features() {
     { icon: UsersIcon, title: "Move in with people you click with.", body: "Group chat with matches, share listings, coordinate move-in dates — all in one place before lease day.", tags: ["Group chats", "Saved listings", "Move-in planning"], span: true },
   ];
   return (
-    <section id="features" className="py-24">
-      <div className="mx-auto max-w-[1180px] px-7">
+    <section id="features" className="py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
         <span data-reveal className="text-[12px] uppercase tracking-[0.16em] text-[#5C7A5A] font-medium">Features</span>
         <h2 data-reveal data-delay="1" className="mt-3 font-serif text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-[-0.02em] text-[#0E0F0C] max-w-[22ch]">
           Everything campus housing should've been.
         </h2>
         <div className="mt-14 grid gap-4 md:grid-cols-2">
           {features.map((f) => (
-            <div key={f.title} data-reveal className={`card-hover rounded-[22px] border border-[#E8E3D7] bg-white p-9 ${f.span ? "md:col-span-2" : ""}`}>
+            <div key={f.title} data-reveal className={`card-hover rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-9 ${f.span ? "md:col-span-2" : ""}`}>
               <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#F1EEE6] text-[#0E0F0C]">
                 <f.icon className="h-5 w-5" />
               </div>
@@ -617,8 +617,8 @@ function Marquee() {
 /* ── Universities ── */
 function Universities() {
   return (
-    <section id="schools" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-24">
-      <div className="mx-auto max-w-[1180px] px-7">
+    <section id="schools" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
         <div className="mx-auto max-w-[720px] text-center">
           <span data-reveal className="text-[12px] uppercase tracking-[0.16em] text-[#5C7A5A] font-medium">Launching everywhere</span>
           <h2 data-reveal data-delay="1" className="mt-3 font-serif text-[clamp(32px,5vw,56px)] leading-[1.05] tracking-[-0.02em] text-[#0E0F0C]">
@@ -645,8 +645,8 @@ function Universities() {
 /* ── Footer ── */
 function Footer({ onJoin }: { onJoin: () => void }) {
   return (
-    <footer className="bg-[#0E0F0C] pt-16 pb-8 text-[#FAFAF7]">
-      <div className="mx-auto max-w-[1180px] px-7">
+    <footer className="bg-[#0E0F0C] pt-12 pb-8 md:pt-16 text-[#FAFAF7]">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.4fr]">
 
           {/* Brand */}
@@ -655,8 +655,8 @@ function Footer({ onJoin }: { onJoin: () => void }) {
             <p className="mt-4 text-[14px] leading-[1.65] text-[#FAFAF7]/50 max-w-[26ch]">
               Verified student housing, scam-free roommate matching, and real neighborhood insights.
             </p>
-            <a href="mailto:hello@nestu.app" className="mt-5 inline-block text-[13px] text-[#C75A38] hover:opacity-80 transition-opacity">
-              hello@nestu.app
+            <a href="mailto:nestu-waitlist@aayushswami.com" className="mt-5 inline-block text-[13px] text-[#C75A38] hover:opacity-80 transition-opacity">
+              nestu-waitlist@aayushswami.com
             </a>
           </div>
 
@@ -762,7 +762,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7]">
+    <div className="min-h-screen bg-[#FAFAF7] overflow-x-hidden">
       <Nav onJoin={scrollToTop} />
       <Hero {...heroProps} />
       <Community />
