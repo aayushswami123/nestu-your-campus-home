@@ -101,15 +101,17 @@ function WaitlistForm({ onSuccess }: { onSuccess: (r: BackendResult) => void }) 
   const [email, setEmail] = useState(""); const [name, setName] = useState("");
   const [role, setRole] = useState(""); const [location, setLocation] = useState("");
   const [referredBy, setReferredBy] = useState(""); const [loading, setLoading] = useState(false);
+  const [slow, setSlow] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false); const [error, setError] = useState<string | null>(null);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault(); setError(null);
     const t = email.trim().toLowerCase();
     if (!t || !t.includes("@")) { setError("Please enter a valid email address."); return; }
-    setLoading(true);
+    setLoading(true); setSlow(false);
+    const slowTimer = setTimeout(() => setSlow(true), 4000);
     const result = await postToBackend({ email: t, name: name.trim() || undefined, role: role || undefined, location: location.trim() || undefined, referred_by: referredBy.trim() || undefined, source: "landing_form" });
-    setLoading(false);
+    clearTimeout(slowTimer); setLoading(false); setSlow(false);
     if (!result.ok) { setError("Something went wrong. Please try again."); return; }
     onSuccess(result);
   };
@@ -168,7 +170,7 @@ function WaitlistForm({ onSuccess }: { onSuccess: (r: BackendResult) => void }) 
 
       <button type="submit" disabled={loading}
         className="mt-2 flex h-12 w-full items-center justify-center gap-2 rounded-[12px] bg-[#C4622D] text-[15px] font-medium text-white transition hover:-translate-y-px hover:shadow-[0_8px_22px_-8px_rgba(196,98,45,0.7)] active:scale-[0.98] disabled:opacity-60">
-        {loading ? "Joining…" : "Get early access"} <ArrowIcon className="h-4 w-4" />
+        {loading ? (slow ? "Almost there…" : "Joining…") : "Get early access"} <ArrowIcon className="h-4 w-4" />
       </button>
       <p className="mt-3.5 text-center text-[12px] text-[#95968F]">No spam. Unsubscribe anytime.</p>
     </form>
@@ -712,6 +714,11 @@ export default function App() {
   const [successData, setSuccessData] = useState<BackendResult | null>(null);
 
   const handleSuccess = (result: BackendResult) => { setSuccessData(result); setPageState("success"); };
+
+  // Wake up Render on page load so the backend is warm by the time the user submits
+  useEffect(() => {
+    if (BACKEND_BASE) fetch(`${BACKEND_BASE}/health`, { method: "GET" }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
