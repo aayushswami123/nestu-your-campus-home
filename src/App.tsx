@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
-const BACKEND_BASE = (import.meta.env.VITE_BACKEND_URL as string | undefined) ?? "";
+const BACKEND_BASE = ((import.meta.env.VITE_BACKEND_URL as string | undefined) ?? "").replace(/\/$/, "");
 
 type BackendResult = { ok: boolean; duplicate?: boolean; referralCode?: string; position?: number };
 type PageState = "form" | "google-details" | "success" | "oauth-error";
