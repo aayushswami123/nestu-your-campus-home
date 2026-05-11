@@ -61,10 +61,19 @@ function scrollTo(id: string) {
 
 /* ── Nav ── */
 function Nav({ onJoin }: { onJoin: () => void }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 500);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 border-b border-[#E8E3D7]/60 bg-[#FAFAF7]/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-5">
-        <Logo />
+        <button onClick={() => scrollTo("top")} aria-label="Back to top">
+          <Logo />
+        </button>
         <nav className="hidden items-center gap-7 md:flex">
           {[["how", "How it works"], ["features", "Features"], ["schools", "Universities"]].map(([id, label]) => (
             <button key={id} onClick={() => scrollTo(id)}
@@ -73,7 +82,8 @@ function Nav({ onJoin }: { onJoin: () => void }) {
             </button>
           ))}
         </nav>
-        <button onClick={onJoin} className="flex items-center gap-2 rounded-[10px] bg-[#0E0F0C] px-4 py-2.5 text-sm font-medium text-[#FAFAF7] transition hover:-translate-y-px hover:shadow-lg active:scale-[0.98]">
+        <button onClick={onJoin}
+          className={`flex items-center gap-2 rounded-[10px] bg-[#0E0F0C] px-4 py-2.5 text-sm font-medium text-[#FAFAF7] transition-all duration-300 hover:-translate-y-px hover:shadow-lg active:scale-[0.98] ${scrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
           Join waitlist <ArrowIcon className="h-3.5 w-3.5" />
         </button>
       </div>
@@ -337,14 +347,10 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
               Verified subleases, AI roommate matching, and real neighborhood
               data — built for students, interns, and international newcomers.
             </p>
-            <div data-reveal data-delay="2" className="mt-8 flex flex-wrap gap-3">
-              <a href="#top" onClick={e => { e.preventDefault(); document.getElementById("top")?.scrollIntoView({ behavior: "smooth" }); }}
-                className="flex items-center gap-2 rounded-[12px] bg-[#C4622D] px-5 py-3.5 text-[15px] font-medium text-white transition hover:-translate-y-px hover:shadow-[0_8px_22px_-8px_rgba(196,98,45,0.7)] active:scale-[0.98]">
-                Get early access <ArrowIcon className="h-4 w-4" />
-              </a>
-              <a href="#how" className="flex items-center gap-2 rounded-[12px] border border-[#E8E3D7] bg-transparent px-5 py-3.5 text-[15px] font-medium text-[#0E0F0C] transition hover:bg-[#F1EEE6] hover:border-[#D9D3C3] active:scale-[0.98]">
-                See how it works
-              </a>
+            <div data-reveal data-delay="2" className="mt-8">
+              <button onClick={() => scrollTo("how")} className="flex items-center gap-2 rounded-[12px] border border-[#E8E3D7] bg-transparent px-5 py-3.5 text-[15px] font-medium text-[#0E0F0C] transition hover:bg-[#F1EEE6] hover:border-[#D9D3C3] active:scale-[0.98]">
+                See how it works <ArrowIcon className="h-4 w-4" />
+              </button>
             </div>
             <div data-reveal data-delay="3" className="mt-5 flex flex-wrap gap-4 text-[13px] text-[#6B6C66]">
               {["Free forever", "No broker fees", "Verified listings only"].map(t => (
@@ -637,17 +643,61 @@ function Universities() {
 /* ── Footer ── */
 function Footer({ onJoin }: { onJoin: () => void }) {
   return (
-    <footer className="bg-[#0E0F0C] px-0 pt-14 pb-9 text-[#FAFAF7]">
+    <footer className="bg-[#0E0F0C] pt-16 pb-8 text-[#FAFAF7]">
       <div className="mx-auto max-w-[1180px] px-7">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <Logo light />
-          <button onClick={onJoin} className="flex items-center gap-2 rounded-[10px] bg-[#FAFAF7] px-4 py-2.5 text-sm font-medium text-[#0E0F0C] transition hover:-translate-y-px hover:shadow-lg active:scale-[0.98]">
-            Get early access <ArrowIcon className="h-3.5 w-3.5" />
-          </button>
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.4fr]">
+
+          {/* Brand */}
+          <div>
+            <Logo light />
+            <p className="mt-4 text-[14px] leading-[1.65] text-[#FAFAF7]/50 max-w-[26ch]">
+              Verified student housing, scam-free roommate matching, and real neighborhood insights.
+            </p>
+            <a href="mailto:hello@nestu.app" className="mt-5 inline-block text-[13px] text-[#C75A38] hover:opacity-80 transition-opacity">
+              hello@nestu.app
+            </a>
+          </div>
+
+          {/* Product */}
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#FAFAF7]/35 mb-5">Product</p>
+            <ul className="space-y-3.5">
+              {[["how", "How it works"], ["features", "Features"], ["schools", "Universities"]].map(([id, label]) => (
+                <li key={id}>
+                  <button onClick={() => scrollTo(id)} className="text-[14px] text-[#FAFAF7]/60 hover:text-[#FAFAF7] transition-colors text-left">
+                    {label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Built for */}
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#FAFAF7]/35 mb-5">Built for</p>
+            <ul className="space-y-3.5">
+              {["Students", "Interns", "International students", "Young professionals", "Landlords"].map(t => (
+                <li key={t} className="text-[14px] text-[#FAFAF7]/60">{t}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* CTA */}
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#FAFAF7]/35 mb-5">Join early</p>
+            <p className="text-[14px] leading-[1.6] text-[#FAFAF7]/50 mb-6">
+              Launching Fall 2026. The most-requested campuses go first.
+            </p>
+            <button onClick={onJoin}
+              className="flex items-center gap-2 rounded-[10px] bg-[#C75A38] px-5 py-3 text-sm font-medium text-white transition hover:opacity-90 hover:-translate-y-px active:scale-[0.98]">
+              Get early access <ArrowIcon className="h-3.5 w-3.5" />
+            </button>
+          </div>
         </div>
-        <div className="mt-10 border-t border-white/10 pt-6 text-[12px] text-[#FAFAF7]/60">
-          <p>Coming to every university. © {new Date().getFullYear()} NestU.</p>
-          <p className="mt-2 max-w-[60ch] leading-[1.55]">NestU is a housing search platform. We are not a licensed real estate broker. Joining the waitlist does not constitute a lease, reservation, or commitment of any kind.</p>
+
+        <div className="mt-14 border-t border-white/8 pt-6 flex flex-wrap items-start justify-between gap-3 text-[12px] text-[#FAFAF7]/35">
+          <p>© {new Date().getFullYear()} NestU. Coming to every university.</p>
+          <p className="max-w-[56ch] leading-[1.6]">NestU is a housing search platform, not a licensed real estate broker. Joining the waitlist does not constitute a lease, reservation, or commitment of any kind.</p>
         </div>
       </div>
     </footer>
