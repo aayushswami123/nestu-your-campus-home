@@ -83,7 +83,7 @@ function Nav({ onJoin }: { onJoin: () => void }) {
           ))}
         </nav>
         <button onClick={onJoin}
-          className={`flex items-center gap-2 rounded-[10px] bg-[#0E0F0C] px-4 py-2.5 text-sm font-medium text-[#FAFAF7] transition-all duration-300 hover:-translate-y-px hover:shadow-lg active:scale-[0.98] ${scrolled ? "opacity-100" : "opacity-0 pointer-events-none"}`}>
+          className={`flex items-center gap-2 rounded-[10px] bg-[#0E0F0C] px-4 py-2.5 text-sm font-medium text-[#FAFAF7] transition-all duration-300 hover:-translate-y-px hover:shadow-lg active:scale-[0.98] ${scrolled ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
           Join waitlist <ArrowIcon className="h-3.5 w-3.5" />
         </button>
       </div>
@@ -245,7 +245,7 @@ function SuccessState({ referralCode, position }: { referralCode?: string; posit
     setCopied(true); setTimeout(() => setCopied(false), 1600);
   };
 
-  const waText = encodeURIComponent(`Just joined the NestU waitlist — verified student housing, no scams: ${fullLink}`);
+  const waText = encodeURIComponent(`Just joined the NestU waitlist. Verified campus housing, no scams: ${fullLink}`);
 
   return (
     <div className="rounded-[22px] border border-[#E8E3D7] bg-white p-5 sm:p-8 shadow-[0_1px_0_rgba(14,15,12,.05),0_18px_40px_-16px_rgba(14,15,12,.14)] text-center">
@@ -335,9 +335,14 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
         <div className="grid items-center gap-10 lg:gap-16 lg:grid-cols-[1.15fr_1fr]">
           {/* Left copy */}
           <div data-reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#E8E3D7] bg-white px-3 py-1.5 text-[13px] text-[#2A2B27] shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)]">
-              <span className="dot-pulse" /> Launching Fall 2026 · 12 universities
-            </span>
+            <div className="flex flex-wrap gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#E8E3D7] bg-white px-3 py-1.5 text-[13px] text-[#2A2B27] shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)]">
+                <span className="dot-pulse" /> Launching Fall 2026 · 12 universities
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#C4622D]/25 bg-[#C4622D]/10 px-3 py-1.5 text-[13px] font-medium text-[#C4622D]">
+                <SparkIcon className="h-3.5 w-3.5" /> AI-powered protection
+              </span>
+            </div>
             <h1 data-reveal data-delay="1" className="mt-6 font-serif text-[clamp(44px,7.4vw,88px)] leading-[1.0] tracking-[-0.025em] text-[#0E0F0C] max-w-[16ch]">
               Housing shouldn't be a{" "}
               <em className="italic text-[#C4622D]">fairy tale.</em>
@@ -345,9 +350,9 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
               <span className="italic text-[#0E0F0C]/55">Get verified listings instead.</span>
             </h1>
             <p data-reveal data-delay="2" className="mt-5 max-w-[56ch] text-[18px] leading-[1.55] text-[#6B6C66]">
-              Stop playing roommate roulette. Stop sending deposits to strangers.
-              Verified subleases, AI roommate matching, and real neighborhood
-              data — built for students, interns, and international newcomers.
+              Stop sending deposits to strangers on Craigslist. Our AI scans every listing for
+              red flags before you ever see it. We match you with someone you'll actually get
+              along with. No broker fees, no scams.
             </p>
             <div data-reveal data-delay="2" className="mt-8">
               <button onClick={() => scrollTo("how")} className="flex items-center gap-2 rounded-[12px] border border-[#E8E3D7] bg-transparent px-5 py-3.5 text-[15px] font-medium text-[#0E0F0C] transition hover:bg-[#F1EEE6] hover:border-[#D9D3C3] active:scale-[0.98]">
@@ -355,7 +360,7 @@ function Hero({ pageState, googleEmail, googleName, successData, onSuccess, onBa
               </button>
             </div>
             <div data-reveal data-delay="3" className="mt-5 flex flex-wrap gap-4 text-[13px] text-[#6B6C66]">
-              {["Free forever", "No broker fees", "Verified listings only"].map(t => (
+              {["AI scam detection", "No broker fees, ever", "We verify every listing", "Free to join, always"].map(t => (
                 <span key={t} className="flex items-center gap-1.5">
                   <CheckIcon className="h-3.5 w-3.5 text-[#5C7A5A]" /> {t}
                 </span>
@@ -399,9 +404,9 @@ function FeaturedTestimonial() {
         <div data-reveal className="mx-auto max-w-[880px] rounded-[22px] border border-[#E8E3D7] bg-white p-6 sm:p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] relative overflow-hidden md:p-14">
           <p className="font-serif text-[clamp(24px,3.4vw,36px)] leading-[1.25] tracking-[-0.012em] text-[#0E0F0C]">
             <span className="font-serif text-[90px] leading-[0] text-[#C4622D] mr-2" style={{ verticalAlign: "-28px" }}>"</span>
-            NestU is what happens when someone finally listens to students. Verified listings,
-            real roommate compatibility, no broker fees — it's the housing search we all
-            should've had years ago.
+            NestU is what happens when someone actually listens to students. Verified listings,
+            no broker fees, and roommates you'll genuinely click with. It's the housing search
+            students deserved years ago.
           </p>
           <div className="mt-8 flex items-center gap-3.5 border-t border-[#E8E3D7] pt-6">
             <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0E0F0C] text-[13px] font-semibold text-[#FAFAF7]">SR</span>
@@ -409,7 +414,7 @@ function FeaturedTestimonial() {
               <div className="text-sm font-semibold text-[#0E0F0C]">Samira R.</div>
               <div className="text-[13px] text-[#6B6C66]">CS Junior · Early community member</div>
             </div>
-            <span className="ml-auto hidden font-serif text-[18px] text-[#2A2B27]/70 sm:block">— Joined #0042</span>
+            <span className="ml-auto hidden font-serif text-[18px] text-[#2A2B27]/70 sm:block">Joined #0042</span>
           </div>
         </div>
       </div>
@@ -425,18 +430,18 @@ function SubleasePitch() {
         <div data-reveal className="sublease-card relative grid gap-9 overflow-hidden rounded-[22px] border border-[#E8E3D7] bg-white p-6 sm:p-10 shadow-[0_1px_0_rgba(14,15,12,.04),0_8px_24px_-10px_rgba(14,15,12,.08)] lg:grid-cols-[1.05fr_.95fr] lg:gap-14 lg:p-14 items-center">
           <div className="absolute -right-28 -top-28 h-72 w-72 rounded-full" style={{ background: "radial-gradient(circle, rgba(196,98,45,.18), transparent 65%)", pointerEvents: "none" }} />
           <div className="relative z-10">
-            <span className="text-[12px] uppercase tracking-[0.16em] text-[#C4622D] font-medium">Posting your sublease?</span>
+            <span className="text-[12px] uppercase tracking-[0.16em] text-[#C4622D] font-medium">Have a room to fill?</span>
             <h2 className="mt-3 font-serif text-[clamp(30px,4.6vw,52px)] leading-[1.05] tracking-[-0.02em] text-[#0E0F0C] max-w-[18ch]">
               The hassle of finding someone to take your room?{" "}
               <em className="italic text-[#C4622D]">We got you.</em>
             </h2>
             <p className="mt-4 text-[16px] leading-[1.6] text-[#6B6C66] max-w-[56ch]">
-              Studying abroad, graduating early, or just leaving for the summer?
-              List your place in 60 seconds and get matched to verified students looking right now —
-              no Facebook groups, no flaky DMs, no broker fees. Free to post, always.
+              Studying abroad? Graduating early? List your place in 60 seconds.
+              We match you with students already searching in your area.
+              No Facebook groups. No flaky texts. Free to post, always.
             </p>
             <ul className="mt-5 grid gap-2.5">
-              {["Post in under a minute", "We screen every applicant", "Free — no listing fees, ever"].map(t => (
+              {["Post in under a minute", "We screen every applicant", "Free. No listing fees, ever."].map(t => (
                 <li key={t} className="flex items-center gap-2.5 text-sm text-[#0E0F0C]">
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#5C7A5A]/15 text-[#5C7A5A]">
                     <CheckIcon className="h-3 w-3" />
@@ -534,12 +539,48 @@ function Stats() {
   );
 }
 
+/* ── AI Shield ── */
+function AIShield() {
+  const points = [
+    { icon: ShieldIcon, title: "Scam detection", d: "Our AI cross-checks every listing against known scam patterns, fake photo libraries, and suspicious pricing. Flagged listings never reach you." },
+    { icon: SparkIcon, title: "Roommate matching", d: "You answer 8 questions. Our model scores lifestyle compatibility and surfaces the people you'd actually want to live with." },
+    { icon: PinIcon, title: "Neighborhood scoring", d: "Get AI-scored walkability, transit access, and nearby amenities for every listing. You know exactly what you're walking into." },
+  ];
+  return (
+    <section className="bg-[#0E0F0C] py-14 md:py-24">
+      <div className="mx-auto max-w-[1180px] px-4 sm:px-7">
+        <div className="mx-auto max-w-[680px] text-center mb-12">
+          <span data-reveal className="text-[12px] uppercase tracking-[0.16em] text-[#C75A38] font-medium">AI Protection</span>
+          <h2 data-reveal data-delay="1" className="mt-3 font-serif text-[clamp(32px,5vw,52px)] leading-[1.05] tracking-[-0.02em] text-[#F2ECE2]">
+            Your safety, handled by AI.
+          </h2>
+          <p data-reveal data-delay="2" className="mt-4 text-[17px] leading-[1.6] text-[#F2ECE2]/55">
+            Before you see a listing, our AI has already screened it. Fake addresses, mismatched photos,
+            suspicious pricing — caught automatically, every time.
+          </p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {points.map((p, i) => (
+            <div key={p.title} data-reveal data-delay={String(i + 1)} className="rounded-[22px] border border-white/8 bg-white/5 p-6 sm:p-8">
+              <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-[12px] bg-[#C75A38]/15">
+                <p.icon className="h-5 w-5 text-[#C75A38]" />
+              </div>
+              <h3 className="font-serif text-[22px] leading-[1.1] text-[#F2ECE2]">{p.title}</h3>
+              <p className="mt-2.5 text-[14px] leading-[1.65] text-[#F2ECE2]/50">{p.d}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ── How It Works ── */
 function HowItWorks() {
   const steps = [
-    { n: "01", t: "Create your profile", d: "Tell us your budget, move-in date, university, and lifestyle preferences. Takes about 3 minutes." },
-    { n: "02", t: "Browse verified listings", d: "Filter by price, distance to campus, furnishing, pets. Every listing is landlord-verified before going live." },
-    { n: "03", t: "Match and move in", d: "AI matches you with compatible roommates. Chat, connect, and sign. All in one place." },
+    { n: "01", t: "Create your profile", d: "Tell us your budget, move-in date, university, and lifestyle. Our AI uses this to personalise everything you see. Takes 3 minutes." },
+    { n: "02", t: "Browse AI-verified listings", d: "Filter by price, distance, furnishing, and pets. Our AI has already scanned every listing for red flags before you see it." },
+    { n: "03", t: "Get matched and sign", d: "Our AI surfaces the roommates you'd actually enjoy living with. Chat, share listings, and sign. Done." },
   ];
   return (
     <section id="how" className="border-y border-[#E8E3D7] bg-[#F1EEE6] py-14 md:py-24">
@@ -565,10 +606,10 @@ function HowItWorks() {
 /* ── Features ── */
 function Features() {
   const features = [
-    { icon: KeyIcon, title: "Real listings. Zero scams.", body: "Every landlord goes through identity verification. Every listing is reviewed before it goes live. No Craigslist risk, no fake posts, no lockbox tricks.", tags: ["Identity verified", "Short-term ok", "Furnished options", "Semester leases"], span: true },
-    { icon: SparkIcon, title: "Roommate matching that works.", body: "Answer 8 questions. Our AI scores compatibility on sleep, cleanliness, budget, and lifestyle.", tags: ["Sleep", "Cleanliness", "Budget"], span: false },
-    { icon: PinIcon, title: "Know the block before you sign.", body: "Walkability to campus, food, transit, gyms, grocery. Decide with full context, not just rent.", tags: ["Walkability", "Food nearby", "Transit"], span: false },
-    { icon: UsersIcon, title: "Move in with people you click with.", body: "Group chat with matches, share listings, coordinate move-in dates — all in one place before lease day.", tags: ["Group chats", "Saved listings", "Move-in planning"], span: true },
+    { icon: ShieldIcon, title: "AI catches scams. We verify the rest.", body: "Our AI scans every listing for red flags — fake addresses, duplicate photos, suspicious pricing. Then a human reviews it. Nothing goes live without both checks passing. No Craigslist risk, no lockbox tricks.", tags: ["AI scam detection", "Identity verified", "Human reviewed", "Semester leases"], span: true },
+    { icon: SparkIcon, title: "Roommate matching that actually works.", body: "Tell us your sleep schedule, cleanliness habits, budget, and lifestyle. Our AI surfaces the people you'd genuinely click with, not just whoever applied first.", tags: ["AI-matched", "Cleanliness", "Budget range"], span: false },
+    { icon: PinIcon, title: "Know the neighborhood before you sign.", body: "See walkability scores, nearby restaurants, transit stops, gyms, and grocery stores. Make the call with the full picture, not just the price.", tags: ["Walkability", "Food nearby", "Transit"], span: false },
+    { icon: UsersIcon, title: "Move in with people you click with.", body: "Chat with your matches, share listings, and coordinate move-in dates. Everything you need before you sign.", tags: ["Group chats", "Saved listings", "Move-in planning"], span: true },
   ];
   return (
     <section id="features" className="py-14 md:py-24">
@@ -598,7 +639,7 @@ function Features() {
 
 /* ── Marquee ── */
 function Marquee() {
-  const items = ["Verified students & professionals", "AI roommate matching", "Real subleases, zero scams", "Know the neighborhood", "No broker fees, ever", "Built for campus"];
+  const items = ["AI scam detection", "Verified listings only", "AI roommate matching", "No broker fees, ever", "AI neighborhood scoring", "Zero scams, guaranteed"];
   const doubled = [...items, ...items];
   return (
     <div className="marquee-dark">
@@ -625,7 +666,7 @@ function Universities() {
             Coming soon to a campus near you.
           </h2>
           <p data-reveal data-delay="2" className="mt-3.5 text-[17px] leading-[1.55] text-[#6B6C66]">
-            Join the waitlist and tell us where you study — the most-requested campuses launch first.
+            Join the waitlist and tell us where you study. The most-requested campuses launch first.
           </p>
         </div>
         <div data-reveal data-delay="2" className="mt-10 flex justify-center">
@@ -653,7 +694,7 @@ function Footer({ onJoin }: { onJoin: () => void }) {
           <div>
             <Logo light />
             <p className="mt-4 text-[14px] leading-[1.65] text-[#FAFAF7]/50 max-w-[26ch]">
-              Verified student housing, scam-free roommate matching, and real neighborhood insights.
+              Scam-free campus housing with verified listings and honest neighborhood data.
             </p>
             <a href="mailto:nestu-waitlist@aayushswami.com" className="mt-5 inline-block text-[13px] text-[#C75A38] hover:opacity-80 transition-opacity">
               nestu-waitlist@aayushswami.com
@@ -674,9 +715,9 @@ function Footer({ onJoin }: { onJoin: () => void }) {
             </ul>
           </div>
 
-          {/* Built for */}
+          {/* Who it's for */}
           <div>
-            <p className="text-[11px] uppercase tracking-[0.16em] text-[#FAFAF7]/35 mb-5">Built for</p>
+            <p className="text-[11px] uppercase tracking-[0.16em] text-[#FAFAF7]/35 mb-5">Who it's for</p>
             <ul className="space-y-3.5">
               {["Students", "Interns", "International students", "Young professionals", "Landlords"].map(t => (
                 <li key={t} className="text-[14px] text-[#FAFAF7]/60">{t}</li>
@@ -762,13 +803,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF7] overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAFAF7] overflow-x-clip">
       <Nav onJoin={scrollToTop} />
       <Hero {...heroProps} />
       <Community />
       <FeaturedTestimonial />
       <SubleasePitch />
       <Stats />
+      <AIShield />
       <HowItWorks />
       <Features />
       <Marquee />

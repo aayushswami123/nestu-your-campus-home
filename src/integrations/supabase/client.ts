@@ -6,9 +6,16 @@ const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY a
 
 // Used only for Google OAuth on the frontend.
 // All database writes go through the backend API (VITE_BACKEND_URL).
+const isBrowser = typeof window !== 'undefined';
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    persistSession: true,
-    autoRefreshToken: true,
+    persistSession: isBrowser,
+    autoRefreshToken: isBrowser,
+    storage: isBrowser ? undefined : {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+    },
   },
 });

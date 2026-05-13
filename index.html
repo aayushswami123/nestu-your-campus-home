@@ -9,8 +9,8 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     <!-- Primary meta -->
-    <title>NestU — Verified student housing. No scams, no broker fees.</title>
-    <meta name="description" content="Stop playing roommate roulette. Verified subleases, AI roommate matching by lifestyle, and real neighborhood insights — built for students, interns, and international students. Free to join." />
+    <title>NestU: Verified student housing. No scams, no broker fees.</title>
+    <meta name="description" content="NestU verifies every listing, matches you with compatible roommates, and shows you what the neighborhood is actually like. No broker fees. Free to join." />
     <meta name="application-name" content="NestU" />
     <meta name="author" content="NestU" />
     <meta name="robots" content="index, follow" />
@@ -20,17 +20,17 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="NestU" />
     <meta property="og:url" content="https://nestu.app/" />
-    <meta property="og:title" content="NestU — Verified student housing. No scams, no broker fees." />
-    <meta property="og:description" content="Verified landlords. AI roommate matching. Real neighborhood data. Built for students, interns, and international newcomers." />
+    <meta property="og:title" content="NestU: Verified student housing. No scams, no broker fees." />
+    <meta property="og:description" content="NestU verifies every listing, matches you with compatible roommates, and shows you what the neighborhood is actually like. No broker fees. Free to join." />
     <meta property="og:image" content="https://nestu.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="NestU — Verified student housing" />
+    <meta property="og:image:alt" content="NestU: Verified student housing" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="NestU — Verified student housing. No scams, no broker fees." />
-    <meta name="twitter:description" content="Stop Craigslist roulette. Verified subleases, AI roommate matching, and real neighborhood insights." />
+    <meta name="twitter:title" content="NestU: Verified student housing. No scams, no broker fees." />
+    <meta name="twitter:description" content="NestU verifies every listing, matches you with compatible roommates, and shows you what the neighborhood is actually like. No broker fees. Free to join." />
     <meta name="twitter:image" content="https://nestu.app/og-image.png" />
 
     <!-- Theme color -->
@@ -47,27 +47,40 @@
       "@graph": [
         {
           "@type": "Organization",
+          "@id": "https://nestu.app/#org",
           "name": "NestU",
           "url": "https://nestu.app/",
-          "logo": "https://nestu.app/favicon.svg",
-          "description": "Verified student housing with AI roommate matching and neighborhood insights for students, interns, and international students.",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://nestu.app/favicon.svg"
+          },
+          "description": "NestU verifies campus housing listings, matches students with compatible roommates, and provides neighborhood data. No broker fees.",
           "foundingDate": "2025",
           "founder": {
             "@type": "Person",
             "name": "Aayush Swami"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "nestu-waitlist@aayushswami.com",
+            "contactType": "customer support"
           }
         },
         {
           "@type": "WebSite",
+          "@id": "https://nestu.app/#site",
           "name": "NestU",
-          "url": "https://nestu.app/"
+          "url": "https://nestu.app/",
+          "publisher": { "@id": "https://nestu.app/#org" }
         },
         {
           "@type": "WebPage",
-          "name": "NestU — Verified student housing waitlist",
+          "@id": "https://nestu.app/",
+          "name": "NestU: Verified student housing. No scams, no broker fees.",
           "url": "https://nestu.app/",
-          "description": "Join the NestU waitlist for verified student housing, scam-free roommate matching, and neighborhood insights.",
-          "isPartOf": { "@id": "https://nestu.app/" }
+          "description": "NestU verifies every listing, matches you with compatible roommates, and shows you what the neighborhood is actually like. No broker fees. Free to join.",
+          "isPartOf": { "@id": "https://nestu.app/#site" },
+          "about": { "@id": "https://nestu.app/#org" }
         }
       ]
     }
